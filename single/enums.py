@@ -1,3 +1,4 @@
+"""This contains some flags mainly used in sources."""
 import enum as e
 
 
