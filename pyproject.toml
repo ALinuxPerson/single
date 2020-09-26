@@ -9,6 +9,7 @@ license = "GPL-3.0+"
 python = "^3.6"
 mypy = "^0.782"
 typer = "^0.3.2"
+toml = "^0.10.1"
 
 [tool.poetry.dev-dependencies]
 black = "^19.10b0"
