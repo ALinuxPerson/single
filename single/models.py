@@ -20,6 +20,7 @@ class Package:
 
     name: str
     version: str
+    description: str
     install_size: float
     download_size: float
 
