@@ -1,7 +1,0 @@
-[metadata]
-name = "OneSource"
-version = "0.1.0"
-description = "The unified way to get every package in one single source."
-source_name = "OneSource"
-package_name = "OnePackage"
-dependencies = []
