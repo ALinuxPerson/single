@@ -34,7 +34,7 @@ class Source:
     def backend_version(self) -> str:
         raise NotImplementedError
 
-    def supported(self) -> bool:
+    def supported(self) -> None:
         raise NotImplementedError
 
     def package(self, name: str) -> t.List[Package]:

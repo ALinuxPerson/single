@@ -15,8 +15,8 @@ class DummySource(Source):
     def backend_version(self) -> str:
         return "0.1.0"
 
-    def supported(self) -> bool:
-        return True
+    def supported(self) -> None:
+        return None
 
     def package(self, name: str) -> t.List[Package]:
         return [Package("dummy", "0.1.0", "This is a dummy package.", 2.0, 1.0)]
