@@ -47,14 +47,30 @@ class SourceMetadata:
         )
 
 
+def find_sources(dirs: t.List[Path] = None) -> t.List[Path]:
+    """This finds sources from directories.
+
+    Args:
+        dirs: The directories.
+
+    Returns:
+        A list of paths which could be sources.
+    """
+    dirs = dirs or SOURCES_DIRS
+    dirs_iterdir: t.List[t.Iterable[Path]] = [dir_.iterdir() for dir_ in dirs]
+    all_paths: t.List[Path] = u.flatten_list(dirs_iterdir)
+    return [path for path in all_paths if path.is_dir()]
+
+
 def get_sources(dirs: t.List[Path] = None) -> t.List[SourceMetadata]:
     """This gets sources from multiple directories.
 
     Args:
-        dirs: The directories to find sources from.
+        dirs: The directories to get sources from.
 
     Returns:
         A list of Source Metadata.
     """
     dirs = dirs or SOURCES_DIRS
-    return [SourceMetadata.from_source(dir_) for dir_ in dirs]
+    sources_found: t.List[Path] = find_sources(dirs)
+    return [SourceMetadata.from_source(dir_) for dir_ in sources_found]
