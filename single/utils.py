@@ -3,6 +3,7 @@ from pathlib import Path
 from types import ModuleType
 import importlib.util
 import os
+import typing as t
 
 
 def get_module(path: Path) -> ModuleType:
@@ -21,3 +22,15 @@ def get_module(path: Path) -> ModuleType:
     spec.loader.exec_module(module)  # type: ignore  # i don't care. if it works, it works.
 
     return module
+
+
+def flatten_list(list_: t.List[t.Any]) -> t.List[t.Any]:
+    """This flattens a list.
+
+    Args:
+        list_: The list to flatten.
+
+    Returns:
+        The flattened list.
+    """
+    return [item for sub_list in list_ for item in sub_list]
