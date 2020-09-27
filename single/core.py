@@ -5,6 +5,7 @@ import typing as t
 from pathlib import Path
 import toml
 from single import utils as u
+from single.constants import SOURCES_DIRS
 
 
 @attr.s(auto_attribs=True, frozen=True)
@@ -41,3 +42,16 @@ class SourceMetadata:
             package_ref,
             metadata["dependencies"],
         )
+
+
+def get_sources(dirs: t.List[Path] = None) -> t.List[SourceMetadata]:
+    """This gets sources from multiple directories.
+
+    Args:
+        dirs: The directories to find sources from.
+
+    Returns:
+        A list of Source Metadata.
+    """
+    dirs = dirs or SOURCES_DIRS
+    return [SourceMetadata.from_source(dir_) for dir_ in dirs]
