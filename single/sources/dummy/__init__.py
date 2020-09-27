@@ -12,7 +12,7 @@ class DummySource(Source):
         ]
 
     @property
-    def version(self) -> str:
+    def backend_version(self) -> str:
         return "0.1.0"
 
     def supported(self) -> bool:

@@ -31,7 +31,7 @@ class Source:
         raise NotImplementedError
 
     @property
-    def version(self) -> str:
+    def backend_version(self) -> str:
         raise NotImplementedError
 
     def supported(self) -> bool:
