@@ -27,8 +27,11 @@ class SourceMetadata:
         Returns:
             The source metadata.
         """
+        if not source_path.exists():
+            raise FileNotFoundError("source path doesn't exist")
         if not source_path.is_dir():
             raise NotADirectoryError("source path must be a directory")
+
         metadata_path: Path = source_path / "source.toml"
         metadata: t.Dict[str, t.Any] = toml.loads(metadata_path.read_text())["metadata"]  # type: ignore
         module: ModuleType = u.get_module(source_path / "__init__.py")
