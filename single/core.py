@@ -1,10 +1,10 @@
 from types import ModuleType
 import attr
 from single import Package, Source
+from single import utils as u
 import typing as t
 from pathlib import Path
 import toml
-from single import utils as u
 from single.constants import SOURCES_DIRS
 
 
@@ -45,6 +45,9 @@ class SourceMetadata:
             package_ref,
             metadata["dependencies"],
         )
+
+    def __attrs_post_init__(self) -> None:
+        return self.source_reference.supported()
 
 
 def find_sources(dirs: t.List[Path] = None) -> t.List[Path]:
