@@ -10,6 +10,9 @@ python = "^3.6"
 mypy = "^0.782"
 typer = "^0.3.2"
 toml = "^0.10.1"
+rich = "^7.1.0"
+loguru = "^0.5.3"
+rpyc = "^4.1.5"
 
 [tool.poetry.dev-dependencies]
 black = "^19.10b0"
