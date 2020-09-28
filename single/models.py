@@ -28,23 +28,73 @@ class Package:
 class Source:
     @property
     def FLAGS(self) -> t.List[Flags]:
+        """This returns the number of flags that this source uses.
+
+        Returns:
+            The flags.
+        """
         raise NotImplementedError
 
     @property
     def backend_version(self) -> str:
+        """This returns the backend version of the source.
+
+        Returns:
+            The backend version.
+        """
         raise NotImplementedError
 
     def supported(self) -> None:
+        """This goes through a number of checks to see if the source supports a system.
+
+        Returns:
+            Nothing, or raise an UnsupportedSystemError.
+        """
         raise NotImplementedError
 
     def package(self, name: str) -> t.List[Package]:
+        """This searches for packages.
+
+        Args:
+            name: The name of the package.
+
+        Returns:
+            A list of packages found.
+        """
         raise NotImplementedError
 
     def install_package(self, package: Package) -> None:
+        """This installs a package.
+
+        Args:
+            package: The package to install.
+
+        Returns:
+            Nothing, or raise an exception.
+        """
         raise NotImplementedError
 
     def remove_package(self, package: Package) -> None:
+        """This removes a package.
+
+        Args:
+            package: The package to remove.
+
+        Returns:
+            Nothing, or raise an exception.
+        """
         raise NotImplementedError
 
     def update_package(self, package: Package) -> None:
+        """This updates a package.
+
+        This updates a package. Please not that if the PARTIAL_UPGRADES_SUPPORTED flag is not present, this function
+        will fail.
+
+        Args:
+            package: The package to update.
+
+        Returns:
+
+        """
         raise NotImplementedError
