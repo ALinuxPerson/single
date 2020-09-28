@@ -1,4 +1,3 @@
-from types import ModuleType
 import attr
 from single import Package, Source
 from single import utils as u
@@ -32,11 +31,11 @@ class SourceMetadata:
         if not source_path.is_dir():
             raise NotADirectoryError(f"source path '{source_path}' must be a directory")
 
-        metadata_path: Path = source_path / "source.toml"
-        metadata: t.Dict[str, t.Any] = toml.loads(metadata_path.read_text())["metadata"]  # type: ignore
-        module: ModuleType = u.get_module(source_path / "__init__.py")
-        source_ref: Source = getattr(module, metadata["source_name"])
-        package_ref: Package = getattr(module, metadata["package_name"])
+        metadata_path = source_path / "source.toml"
+        metadata = toml.loads(metadata_path.read_text())["metadata"]  # type: ignore
+        module = u.get_module(source_path / "__init__.py")
+        source_ref = getattr(module, metadata["source_name"])
+        package_ref = getattr(module, metadata["package_name"])
         return cls(
             metadata["name"],
             metadata["version"],
@@ -60,8 +59,8 @@ def find_sources(dirs: t.List[Path] = None) -> t.List[Path]:
         A list of paths which could be sources.
     """
     dirs = dirs or SOURCES_DIRS
-    dirs_iterdir: t.List[t.Iterable[Path]] = [dir_.iterdir() for dir_ in dirs]
-    all_paths: t.List[Path] = u.flatten_list(dirs_iterdir)
+    dirs_iterdir = [dir_.iterdir() for dir_ in dirs]
+    all_paths = u.flatten_list(dirs_iterdir)
     return [path for path in all_paths if path.is_dir()]
 
 
@@ -75,5 +74,5 @@ def get_sources(dirs: t.List[Path] = None) -> t.List[SourceMetadata]:
         A list of Source Metadata.
     """
     dirs = dirs or SOURCES_DIRS
-    sources_found: t.List[Path] = find_sources(dirs)
+    sources_found = find_sources(dirs)
     return [SourceMetadata.from_source(dir_) for dir_ in sources_found]

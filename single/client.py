@@ -2,7 +2,7 @@
 import typer as ty
 import typing as t
 
-app: ty.Typer = ty.Typer()
+app = ty.Typer()
 
 
 @app.command()
