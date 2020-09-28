@@ -21,11 +21,11 @@ class DummySource(Source):
     def package(self, name: str) -> t.List[Package]:
         return [Package("dummy", "0.1.0", "This is a dummy package.", 2.0, 1.0)]
 
-    def install_package(self, package: Package) -> None:
+    def install_package(self, *packages: Package) -> None:
         pass
 
-    def remove_package(self, package: Package) -> None:
+    def remove_package(self, *packages: Package) -> None:
         pass
 
-    def update_package(self, package: Package) -> None:
+    def update_package(self, *packages: Package) -> None:
         pass

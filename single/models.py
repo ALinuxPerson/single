@@ -63,36 +63,36 @@ class Source:
         """
         raise NotImplementedError
 
-    def install_package(self, package: Package) -> None:
+    def install_package(self, *packages: Package) -> None:
         """This installs a package.
 
         Args:
-            package: The package to install.
+            *packages: The packages to install.
 
         Returns:
             Nothing, or raise an exception.
         """
         raise NotImplementedError
 
-    def remove_package(self, package: Package) -> None:
+    def remove_package(self, *packages: Package) -> None:
         """This removes a package.
 
         Args:
-            package: The package to remove.
+            *packages: The packages to remove.
 
         Returns:
             Nothing, or raise an exception.
         """
         raise NotImplementedError
 
-    def update_package(self, package: Package) -> None:
+    def update_package(self, *packages: Package) -> None:
         """This updates a package.
 
-        This updates a package. Please not that if the PARTIAL_UPGRADES_SUPPORTED flag is not present, this function
-        will fail.
+        This updates a package. Please not that if the PARTIAL_UPGRADES_SUPPORTED flag is not present, inputting
+        anything to *packages will fail.
 
         Args:
-            package: The package to update.
+            *packages: The packages to update.
 
         Returns:
 
