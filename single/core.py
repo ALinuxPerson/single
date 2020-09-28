@@ -12,8 +12,8 @@ class SourceMetadata:
     name: str
     version: str
     description: str
-    source_reference: Source
-    package_reference: Package
+    source_reference: t.Type[Source]
+    package_reference: t.Type[Package]
     dependencies: t.List[str]
 
     @classmethod
@@ -46,7 +46,7 @@ class SourceMetadata:
         )
 
     def __attrs_post_init__(self) -> None:
-        return self.source_reference.supported()
+        return self.source_reference().supported()
 
 
 def find_sources(dirs: t.List[Path] = None) -> t.List[Path]:
@@ -59,6 +59,9 @@ def find_sources(dirs: t.List[Path] = None) -> t.List[Path]:
         A list of paths which could be sources.
     """
     dirs = dirs or SOURCES_DIRS
+    for dir_ in dirs:
+        if not dir_.exists():
+            dirs.remove(dir_)
     dirs_iterdir = [dir_.iterdir() for dir_ in dirs]
     all_paths = u.flatten_list(dirs_iterdir)
     return [path for path in all_paths if path.is_dir()]
