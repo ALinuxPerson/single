@@ -47,35 +47,3 @@ class SourceMetadata:
 
     def __attrs_post_init__(self) -> None:
         return self.source_reference().supported()
-
-
-def find_sources(dirs: t.List[Path] = None) -> t.List[Path]:
-    """This finds sources from directories.
-
-    Args:
-        dirs: The directories.
-
-    Returns:
-        A list of paths which could be sources.
-    """
-    dirs = dirs or SOURCES_DIRS
-    for dir_ in dirs:
-        if not dir_.exists():
-            dirs.remove(dir_)
-    dirs_iterdir = [dir_.iterdir() for dir_ in dirs]
-    all_paths = u.flatten_list(dirs_iterdir)
-    return [path for path in all_paths if path.is_dir()]
-
-
-def get_sources(dirs: t.List[Path] = None) -> t.List[SourceMetadata]:
-    """This gets sources from multiple directories.
-
-    Args:
-        dirs: The directories to get sources from.
-
-    Returns:
-        A list of Source Metadata.
-    """
-    dirs = dirs or SOURCES_DIRS
-    sources_found = find_sources(dirs)
-    return [SourceMetadata.from_source(dir_) for dir_ in sources_found]

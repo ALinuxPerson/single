@@ -4,14 +4,48 @@ from loguru import logger
 import os
 import rpyc as rpc  # type: ignore
 from rpyc.utils.server import ThreadedServer  # type: ignore
-from single.constants import POSSIBLE_LOGGING_LEVELS
+from single.constants import POSSIBLE_LOGGING_LEVELS, SOURCES_DIRS
 from single import core as sc
 from single import UnsupportedSystemError
 import typing as t
+from pathlib import Path
+from single import utils as u
 
 PORT = 0
 loaded_sources: t.List[sc.SourceMetadata] = []
 errors: t.List[Exception] = []
+
+
+def find_sources(dirs: t.List[Path] = None) -> t.List[Path]:
+    """This finds sources from directories.
+
+    Args:
+        dirs: The directories.
+
+    Returns:
+        A list of paths which could be sources.
+    """
+    dirs = dirs or SOURCES_DIRS
+    for dir_ in dirs:
+        if not dir_.exists():
+            dirs.remove(dir_)
+    dirs_iterdir = [dir_.iterdir() for dir_ in dirs]
+    all_paths = u.flatten_list(dirs_iterdir)
+    return [path for path in all_paths if path.is_dir()]
+
+
+def get_sources(dirs: t.List[Path] = None) -> t.List[sc.SourceMetadata]:
+    """This gets sources from multiple directories.
+
+    Args:
+        dirs: The directories to get sources from.
+
+    Returns:
+        A list of Source Metadata.
+    """
+    dirs = dirs or SOURCES_DIRS
+    sources_found = find_sources(dirs)
+    return [sc.SourceMetadata.from_source(dir_) for dir_ in sources_found]
 
 
 def ml_error(message: str) -> None:
@@ -39,19 +73,7 @@ def load_sources() -> None:
     global loaded_sources
 
     logger.info("Loading sources...")
-
-    try:
-        loaded_sources = sc.get_sources()
-    except UnsupportedSystemError as error:
-        ml_error(
-            f"Couldn't load all sources: from source '{error.source_origin}'\n"
-            f"Message:\n"
-            f"{error.message}\n"
-            f"Action Needed:\n"
-            f"{error.action_needed}\n"
-            f"Regular functionality may be hindered."
-        )
-        errors.append(error)
+    loaded_sources = get_sources()
 
 
 def set_ports() -> None:
