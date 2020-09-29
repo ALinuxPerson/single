@@ -4,7 +4,6 @@ from single import utils as u
 import typing as t
 from pathlib import Path
 import toml
-from single.constants import SOURCES_DIRS
 
 
 @attr.s(auto_attribs=True, frozen=True)
@@ -44,6 +43,3 @@ class SourceMetadata:
             package_ref,
             metadata["dependencies"],
         )
-
-    def __attrs_post_init__(self) -> None:
-        return self.source_reference().supported()
