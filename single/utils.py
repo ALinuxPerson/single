@@ -33,3 +33,20 @@ def flatten_list(list_: t.List[t.Any]) -> t.List[t.Any]:
         The flattened list.
     """
     return [item for sub_list in list_ for item in sub_list]
+
+
+def prettify_list(list_: t.List[t.Any]) -> str:
+    """This prettifies a list by making it more human readable.
+
+    Args:
+        list_: The list to prettify.
+
+    Examples:
+        >>> things = ["shoebox", "horn", "matress", 10]
+        >>> prettify_list(things)
+        'shoebox, horn, matress, 10'
+
+    Returns:
+        The prettified list.
+    """
+    return ", ".join([str(item) for item in list_])
