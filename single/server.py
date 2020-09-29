@@ -5,8 +5,18 @@ import os
 import rpyc as rpc  # type: ignore
 from rpyc.utils.server import ThreadedServer  # type: ignore
 from single.constants import POSSIBLE_LOGGING_LEVELS
+from single import core as sc
+from single import UnsupportedSystemError
+import typing as t
 
 PORT = 0
+loaded_sources: t.List[sc.SourceMetadata] = []
+errors: t.List[Exception] = []
+
+
+def ml_error(message: str) -> None:
+    for line in message.splitlines():
+        logger.error(line)
 
 
 def verify_logging_level(level: str) -> bool:
@@ -26,7 +36,22 @@ def set_logging_level(level: str) -> None:
 
 
 def load_sources() -> None:
-    pass
+    global loaded_sources
+
+    logger.info("Loading sources...")
+
+    try:
+        loaded_sources = sc.get_sources()
+    except UnsupportedSystemError as error:
+        ml_error(
+            f"Couldn't load all sources: from source '{error.source_origin}'\n"
+            f"Message:\n"
+            f"{error.message}\n"
+            f"Action Needed:\n"
+            f"{error.action_needed}\n"
+            f"Regular functionality may be hindered."
+        )
+        errors.append(error)
 
 
 def set_ports() -> None:
@@ -46,6 +71,7 @@ def init() -> None:
     set_logging_level(os.getenv("SINGLES_LOGGING_LEVEL", "INFO"))
     logger.debug("Initializing server...")
     set_ports()
+    load_sources()
 
 
 def start() -> None:
