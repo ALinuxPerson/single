@@ -11,6 +11,7 @@ import typing as t
 from pathlib import Path
 from single import utils as u
 from toml.decoder import TomlDecodeError  # type: ignore
+from single._models import ServerState
 
 PORT = 0
 loaded_sources: t.List[sc.SourceMetadata] = []
@@ -162,6 +163,10 @@ class SinglePackageManagerService(rpc.Service):
     def exposed_reload_sources() -> None:
         logger.info("Reloading sources...")
         load_sources()
+
+    @staticmethod
+    def exposed_status() -> ServerState:
+        return ServerState(len(errors) == 0, errors)
 
 
 if __name__ == "__main__":

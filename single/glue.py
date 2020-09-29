@@ -1,4 +1,4 @@
-import rpyc
+import rpyc  # type: ignore
 import attr
 
 
@@ -13,6 +13,9 @@ class SinglePackageManager:
 
     def reload_sources(self) -> None:
         return self._conn.root.reload_sources()
+
+    def status(self) -> None:
+        return self._conn.root.status()
 
     def __attrs_post_init__(self) -> None:
         self.connect()
