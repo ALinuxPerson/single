@@ -10,6 +10,7 @@ from single import UnsupportedSystemError
 import typing as t
 from pathlib import Path
 from single import utils as u
+from toml.decoder import TomlDecodeError  # type: ignore
 
 PORT = 0
 loaded_sources: t.List[sc.SourceMetadata] = []
@@ -25,9 +26,12 @@ def find_sources(dirs: t.List[Path] = None) -> t.List[Path]:
     Returns:
         A list of paths which could be sources.
     """
+    logger.debug("Finding sources...")
     dirs = dirs or SOURCES_DIRS
+    logger.debug(f"Directories chosen: {u.prettify_list(dirs)}")
     for dir_ in dirs:
         if not dir_.exists():
+            logger.debug(f"Directory {dir_} doesn't exist, continuing.")
             dirs.remove(dir_)
     dirs_iterdir = [dir_.iterdir() for dir_ in dirs]
     all_paths = u.flatten_list(dirs_iterdir)
@@ -45,7 +49,51 @@ def get_sources(dirs: t.List[Path] = None) -> t.List[sc.SourceMetadata]:
     """
     dirs = dirs or SOURCES_DIRS
     sources_found = find_sources(dirs)
-    return [sc.SourceMetadata.from_source(dir_) for dir_ in sources_found]
+    source_metadata_found: t.List[sc.SourceMetadata] = []
+
+    for source in sources_found:
+        try:
+            source_metadata = sc.SourceMetadata.from_source(source)
+        except FileNotFoundError as error:
+            ml_error(
+                f"Source is not loaded (path is '{source}')\n"
+                f"One or more files are missing: {error}"
+            )
+            errors.append(error)
+            continue
+        except AttributeError as error:
+            ml_error(
+                f"Source is not loaded (path is '{source}')\n"
+                f"A package or a source reference is missing: {error}"
+            )
+            errors.append(error)
+            continue
+        except TomlDecodeError as error:
+            ml_error(
+                f"Source is not loaded (path is '{source}')\n"
+                f"The TOML configuration couldn't be read properly: {error}"
+            )
+            errors.append(error)
+            continue
+
+        try:
+            source_metadata.source_reference().supported()
+        except UnsupportedSystemError as error:
+            ml_error(
+                f"Source '{source_metadata.name}' is not loaded\n"
+                f"Your system is unsupported:\n"
+                f"{error.message}\n"
+                f"Action needed:\n"
+                f"{error.action_needed}"
+            )
+            errors.append(error)
+            continue
+
+        logger.info(f"Loaded source '{source_metadata.name}'")
+        source_metadata_found.append(source_metadata)
+
+    logger.info(f"{len(source_metadata_found)}/{len(sources_found)} sources loaded")
+    return source_metadata_found
 
 
 def ml_error(message: str) -> None:
