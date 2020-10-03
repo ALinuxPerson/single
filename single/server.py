@@ -166,6 +166,7 @@ class SinglePackageManagerService(rpc.Service):
 
     @staticmethod
     def exposed_status() -> ServerState:
+        logger.info(f"Being asked to check the status of the server")
         return ServerState(len(errors) == 0, errors)
 
 
