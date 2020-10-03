@@ -26,7 +26,7 @@ A single package manager for everything.
     - [ ] Implement `ALL_OS_SUPPORTED` flag
     - [ ] Implement `PARTIAL_UPGRADES_SUPPORTED` flag 
     - [ ] Implement `DOWNGRADE_SUPPORTED` flag
- - [ ] Make docs more clear by differentiating sources
+ - [x] Make docs more clear by differentiating sources
  - [ ] Publish package to PyPi
 
 # License
