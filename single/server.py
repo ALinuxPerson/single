@@ -154,8 +154,12 @@ def start() -> None:
     except OSError as error:
         if error.errno == errno.EADDRINUSE:
             logger.critical(f"Port {PORT} is already in use")
+            sys.exit(1)
         else:
             raise
+    except OverflowError:
+        logger.critical(f"Port {PORT} is not within 0-65535.")
+        sys.exit(1)
 
 
 class SinglePackageManagerService(rpc.Service):
