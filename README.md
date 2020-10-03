@@ -1,4 +1,4 @@
-# single
+# Single
 A single package manager for everything.
 
 # Roadmap
