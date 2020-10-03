@@ -1,0 +1,7 @@
+[metadata]
+name = "Dummy"
+version = "0.1.0"
+description = "This is just a dummy provider used as a schema for other providers."
+source_name = "DummySource"
+package_name = "Package"
+dependencies = []

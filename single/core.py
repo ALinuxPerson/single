@@ -7,7 +7,7 @@ import toml
 
 
 @attr.s(auto_attribs=True, frozen=True)
-class SourceMetadata:
+class ProviderMetadata:
     name: str
     version: str
     description: str
@@ -16,23 +16,25 @@ class SourceMetadata:
     dependencies: t.List[str]
 
     @classmethod
-    def from_source(cls, source_path: Path) -> "SourceMetadata":
-        """This gets SourceMetadata from a source folder.
+    def from_provider(cls, provider_path: Path) -> "ProviderMetadata":
+        """This gets ProviderMetadata from a provider folder.
 
         Args:
-            source_path: The source path.
+            provider_path: The provider path.
 
         Returns:
-            The source metadata.
+            The provider metadata.
         """
-        if not source_path.exists():
-            raise FileNotFoundError(f"source path '{source_path}' doesn't exist")
-        if not source_path.is_dir():
-            raise NotADirectoryError(f"source path '{source_path}' must be a directory")
+        if not provider_path.exists():
+            raise FileNotFoundError(f"provider path '{provider_path}' doesn't exist")
+        if not provider_path.is_dir():
+            raise NotADirectoryError(
+                f"provider path '{provider_path}' must be a directory"
+            )
 
-        metadata_path = source_path / "source.toml"
+        metadata_path = provider_path / "provider.toml"
         metadata = toml.loads(metadata_path.read_text())["metadata"]  # type: ignore
-        module = u.get_module(source_path / "__init__.py")
+        module = u.get_module(provider_path / "__init__.py")
         source_ref = getattr(module, metadata["source_name"])
         package_ref = getattr(module, metadata["package_name"])
         return cls(

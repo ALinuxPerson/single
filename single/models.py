@@ -1,4 +1,4 @@
-"""These are the common core models to inherit from when creating a source."""
+"""These are the common core models to inherit from when creating a provider."""
 import attr
 from single.enums import Flags
 import typing as t

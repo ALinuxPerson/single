@@ -1,7 +1,0 @@
-[metadata]
-name = "DummySource"
-version = "0.1.0"
-description = "This is just a dummy source used as a schema for other sources."
-source_name = "DummySource"
-package_name = "Package"
-dependencies = []

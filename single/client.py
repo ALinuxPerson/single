@@ -8,10 +8,10 @@ app = ty.Typer()
 @app.command()
 def install(
     packages: t.List[str] = ty.Argument(..., help="The packages to install."),
-    sources: t.List[str] = ty.Option(
+    providers: t.List[str] = ty.Option(
         [],
-        metavar="SOURCES",
-        help="The sources to use. By default every source is used.",
+        metavar="PROVIDERS",
+        help="The providers to use. By default every provider is used.",
     ),
 ) -> None:
     """Installs packages."""
@@ -21,10 +21,10 @@ def install(
 @app.command()
 def remove(
     packages: t.List[str] = ty.Argument(..., help="The packages to remove."),
-    sources: t.List[str] = ty.Option(
+    providers: t.List[str] = ty.Option(
         [],
-        metavar="SOURCES",
-        help="The sources to use. By default every source is used.",
+        metavar="PROVIDERS",
+        help="The providers to use. By default every provider is used.",
     ),
 ) -> None:
     """Removes packages."""
@@ -36,12 +36,12 @@ def update(
     packages: t.List[str] = ty.Argument(
         None,
         help="The packages to update. By default every package is updated. Please note that this command may have "
-        "warnings or even error depending on your source's implementation.",
+        "warnings or even error depending on your provider's implementation.",
     ),
-    sources: t.List[str] = ty.Option(
+    providers: t.List[str] = ty.Option(
         [],
-        metavar="SOURCES",
-        help="The sources to use. By default every source is used.",
+        metavar="PROVIDERS",
+        help="The providers to use. By default every provider is used.",
     ),
 ) -> None:
     """Updates packages."""

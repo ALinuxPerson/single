@@ -4,7 +4,7 @@ from loguru import logger
 import os
 import rpyc as rpc  # type: ignore
 from rpyc.utils.server import ThreadedServer  # type: ignore
-from single.constants import POSSIBLE_LOGGING_LEVELS, SOURCES_DIRS
+from single.constants import POSSIBLE_LOGGING_LEVELS, PROVIDERS_DIRS
 from single import core as sc
 from single import UnsupportedSystemError
 import typing as t
@@ -14,21 +14,21 @@ from toml.decoder import TomlDecodeError  # type: ignore
 from single._models import ServerState
 
 PORT = 0
-loaded_sources: t.List[sc.SourceMetadata] = []
+loaded_providers: t.List[sc.ProviderMetadata] = []
 errors: t.List[Exception] = []
 
 
-def find_sources(dirs: t.List[Path] = None) -> t.List[Path]:
-    """This finds sources from directories.
+def find_providers(dirs: t.List[Path] = None) -> t.List[Path]:
+    """This finds providers from directories.
 
     Args:
         dirs: The directories.
 
     Returns:
-        A list of paths which could be sources.
+        A list of paths which could be providers.
     """
-    logger.debug("Finding sources...")
-    dirs = dirs or SOURCES_DIRS
+    logger.debug("Finding providers...")
+    dirs = dirs or PROVIDERS_DIRS
     logger.debug(f"Directories chosen: {u.prettify_list(dirs)}")
     for dir_ in dirs:
         if not dir_.exists():
@@ -39,49 +39,49 @@ def find_sources(dirs: t.List[Path] = None) -> t.List[Path]:
     return [path for path in all_paths if path.is_dir()]
 
 
-def get_sources(dirs: t.List[Path] = None) -> t.List[sc.SourceMetadata]:
-    """This gets sources from multiple directories.
+def get_providers(dirs: t.List[Path] = None) -> t.List[sc.ProviderMetadata]:
+    """This gets providers from multiple directories.
 
     Args:
-        dirs: The directories to get sources from.
+        dirs: The directories to get providers from.
 
     Returns:
-        A list of Source Metadata.
+        A list of Provider Metadata.
     """
-    dirs = dirs or SOURCES_DIRS
-    sources_found = find_sources(dirs)
-    source_metadata_found: t.List[sc.SourceMetadata] = []
+    dirs = dirs or PROVIDERS_DIRS
+    providers_found = find_providers(dirs)
+    provider_metadata_found: t.List[sc.ProviderMetadata] = []
 
-    for source in sources_found:
+    for provider in providers_found:
         try:
-            source_metadata = sc.SourceMetadata.from_source(source)
+            provider_metadata = sc.ProviderMetadata.from_provider(provider)
         except FileNotFoundError as error:
             ml_error(
-                f"Source is not loaded (path is '{source}')\n"
+                f"Provider is not loaded (path is '{provider}')\n"
                 f"One or more files are missing: {error}"
             )
             errors.append(error)
             continue
         except AttributeError as error:
             ml_error(
-                f"Source is not loaded (path is '{source}')\n"
+                f"Provider is not loaded (path is '{provider}')\n"
                 f"A package or a source reference is missing: {error}"
             )
             errors.append(error)
             continue
         except TomlDecodeError as error:
             ml_error(
-                f"Source is not loaded (path is '{source}')\n"
+                f"Provider is not loaded (path is '{provider}')\n"
                 f"The TOML configuration couldn't be read properly: {error}"
             )
             errors.append(error)
             continue
 
         try:
-            source_metadata.source_reference().supported()
+            provider_metadata.source_reference().supported()
         except UnsupportedSystemError as error:
             ml_error(
-                f"Source '{source_metadata.name}' is not loaded\n"
+                f"Provider '{provider_metadata.name}' is not loaded\n"
                 f"Your system is unsupported:\n"
                 f"{error.message}\n"
                 f"Action needed:\n"
@@ -90,11 +90,13 @@ def get_sources(dirs: t.List[Path] = None) -> t.List[sc.SourceMetadata]:
             errors.append(error)
             continue
 
-        logger.info(f"Loaded source '{source_metadata.name}'")
-        source_metadata_found.append(source_metadata)
+        logger.info(f"Loaded provider '{provider_metadata.name}'")
+        provider_metadata_found.append(provider_metadata)
 
-    logger.info(f"{len(source_metadata_found)}/{len(sources_found)} sources loaded")
-    return source_metadata_found
+    logger.info(
+        f"{len(provider_metadata_found)}/{len(providers_found)} providers loaded"
+    )
+    return provider_metadata_found
 
 
 def ml_error(message: str) -> None:
@@ -118,11 +120,11 @@ def set_logging_level(level: str) -> None:
     logger.add(sys.stderr, level=level)
 
 
-def load_sources() -> None:
-    global loaded_sources
+def load_providers() -> None:
+    global loaded_providers
 
-    logger.info("Loading sources...")
-    loaded_sources = get_sources()
+    logger.info("Loading providers...")
+    loaded_providers = get_providers()
 
 
 def set_ports() -> None:
@@ -142,7 +144,7 @@ def init() -> None:
     set_logging_level(os.getenv("SINGLES_LOGGING_LEVEL", "INFO"))
     logger.debug("Initializing server...")
     set_ports()
-    load_sources()
+    load_providers()
 
 
 def start() -> None:
@@ -164,9 +166,9 @@ def start() -> None:
 
 class SinglePackageManagerService(rpc.Service):
     @staticmethod
-    def exposed_reload_sources() -> None:
-        logger.info("Reloading sources...")
-        load_sources()
+    def exposed_reload_providers() -> None:
+        logger.info("Reloading providers...")
+        load_providers()
 
     @staticmethod
     def exposed_status() -> ServerState:

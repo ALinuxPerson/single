@@ -11,8 +11,8 @@ class SinglePackageManager:
     def connect(self) -> None:
         self._conn = rpyc.connect(self.host, self.port)
 
-    def reload_sources(self) -> None:
-        return self._conn.root.reload_sources()
+    def reload_providers(self) -> None:
+        return self._conn.root.reload_providers()
 
     def status(self) -> None:
         return self._conn.root.status()
