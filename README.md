@@ -7,6 +7,7 @@ A single package manager for everything.
     - [ ] Implement package uninstallation
     - [ ] Implement package updates
     - [ ] Implement some kind of configuration to read from
+    - [ ] Implement context-like system for sources to grab for source-server-client interaction
  - [ ] Implement server
     - [ ] Implement unified package installation
     - [ ] Implement unified package uninstallation
