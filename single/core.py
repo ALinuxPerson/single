@@ -1,5 +1,5 @@
 import attr
-from single import Package, Source
+from single import Package, Source, Flags, UnsupportedSystemError
 from single import utils as u
 import typing as t
 from pathlib import Path
@@ -44,4 +44,27 @@ class ProviderMetadata:
             source_ref,
             package_ref,
             metadata["dependencies"],
+        )
+
+
+def process_flags(source_name: str, *flags: Flags) -> None:
+    """This processes flags.
+
+    This processes flags commonly from a FLAG property. This should always be used on Source.supported.
+
+    Args:
+        source_name: The source name used for exceptions.
+        flags: The flags.
+
+    Returns:
+        Nothing.
+    """
+    system = u.get_system()
+    compatible_systems = u.get_compatible_systems(*flags)
+    prettified_csys = u.prettify_list([system_.value for system_ in compatible_systems])
+    if system not in compatible_systems:
+        raise UnsupportedSystemError(
+            f"your system, {system.value}, isn't supported by the source '{source_name}'.",
+            f"switch to one of these operating systems: {prettified_csys} or contact the devs who "
+            f"made the source",
         )

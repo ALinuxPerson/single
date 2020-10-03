@@ -1,4 +1,4 @@
-from single import Source, Flags, Package, UnsupportedSystemError
+from single import Source, Flags, Package, UnsupportedSystemError, process_flags
 import typing as t
 
 
@@ -16,6 +16,7 @@ class DummySource(Source):
         return "0.1.0"
 
     def supported(self) -> None:
+        process_flags(self.__class__.__name__, *self.FLAGS)
         raise UnsupportedSystemError(
             "The system doesn't have the appropriate libraries installed.",
             "Install libraries 'libalpm', 'libapt' and 'libpython'.",

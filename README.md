@@ -20,11 +20,11 @@ A single package manager for everything.
  - [ ] Implement extensive documentation
  - [ ] Implement tests
  - [ ] Make flags actually do something
-    - [ ] Implement `WINDOWS_SUPPORTED` flag
-    - [ ] Implement `MAC_SUPPORTED` flag
-    - [ ] Implement `LINUX_SUPPORTED` flag
-    - [ ] Implement `BSD_SUPPORTED` flag
-    - [ ] Implement `ALL_OS_SUPPORTED` flag
+    - [x] Implement `WINDOWS_SUPPORTED` flag
+    - [x] Implement `MAC_SUPPORTED` flag
+    - [x] Implement `LINUX_SUPPORTED` flag
+    - [x] Implement `BSD_SUPPORTED` flag
+    - [x] Implement `ALL_OS_SUPPORTED` flag
     - [ ] Implement `PARTIAL_UPGRADES_SUPPORTED` flag 
     - [ ] Implement `DOWNGRADE_SUPPORTED` flag
  - [x] Make docs more clear by differentiating sources
