@@ -1,3 +1,4 @@
+"""This is the server."""
 import errno
 import sys
 from loguru import logger
@@ -103,11 +104,27 @@ def get_providers(dirs: t.List[Path] = None) -> t.List[sc.ProviderMetadata]:
 
 
 def ml_error(message: str) -> None:
+    """This is like logger.error, however it prints out a separate line for each line of the message.
+
+    Args:
+        message: The message.
+
+    Returns:
+        Nothing
+    """
     for line in message.splitlines():
         logger.error(line)
 
 
 def verify_logging_level(level: str) -> bool:
+    """This verifies if the logging level is within the possible logging levels, otherwise it falls back to INFO.
+
+    Args:
+        level: The level.
+
+    Returns:
+        True if the logging level is within the possible logging levels, otherwise False.
+    """
     if level not in POSSIBLE_LOGGING_LEVELS:
         logger.warning(
             f"Level '{level}' is not a valid logging level, falling back to INFO"
@@ -116,7 +133,17 @@ def verify_logging_level(level: str) -> bool:
     return True
 
 
-def set_logging_level(level: str) -> None:
+def set_logging_level(
+    level: str,
+) -> None:  # TODO: Make the level type hint be a Literal["DEBUG", "INFO", ...]
+    """This sets the logging level.
+
+    Args:
+        level: The logging level.
+
+    Returns:
+        Nothing.
+    """
     if not verify_logging_level(level):
         level = "INFO"
     logger.remove()
@@ -124,6 +151,11 @@ def set_logging_level(level: str) -> None:
 
 
 def load_providers() -> None:
+    """This loads the providers with logging.
+
+    Returns:
+        Nothing.
+    """
     global loaded_providers
 
     logger.info("Loading providers...")
@@ -131,6 +163,11 @@ def load_providers() -> None:
 
 
 def set_ports() -> None:
+    """This sets the port with logging.
+
+    Returns:
+        Nothing.
+    """
     global PORT
 
     env_port = os.getenv("SINGLES_PORT", "25000")
@@ -144,6 +181,14 @@ def set_ports() -> None:
 
 
 def init() -> None:
+    """This initializes or prepares the server for starting.
+
+    Notes:
+          Note that this does not start the server; it merely initializes the basic functions of the server.
+
+    Returns:
+        Nothing.
+    """
     set_logging_level(os.getenv("SINGLES_LOGGING_LEVEL", "INFO"))
     logger.debug("Initializing server...")
     set_ports()
@@ -151,6 +196,11 @@ def init() -> None:
 
 
 def start() -> None:
+    """This starts the actual server.
+
+    Returns:
+        Nothing.
+    """
     global server
 
     init()
@@ -202,16 +252,31 @@ class SingleThreadedServer(ThreadedServer):
 class SinglePackageManagerService(rpc.Service):
     @staticmethod
     def exposed_reload_providers() -> None:
+        """This reloads providers.
+
+        Returns:
+            Nothing.
+        """
         logger.info("Reloading providers...")
         load_providers()
 
     @property
     def exposed_status(self) -> ServerState:
+        """This gets the current status of the server, including all recoverable errors found.
+
+        Returns:
+            The status of the server.
+        """
         logger.info(f"Being asked to check the status of the server")
         return ServerState(len(errors) == 0, errors)
 
     @staticmethod
     def exposed_close() -> None:
+        """This closes the server.
+
+        Returns:
+            Nothing.
+        """
         logger.info("Being asked to close the server")
         return server.close()
 
