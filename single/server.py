@@ -149,9 +149,8 @@ def init() -> None:
 
 def start() -> None:
     init()
-    logger.info(f"Starting server and listening in port {PORT}...")
     try:
-        server = ThreadedServer(SinglePackageManagerService, port=PORT)
+        server = SingleThreadedServer(SinglePackageManagerService, port=PORT)
         server.start()
     except OSError as error:
         if error.errno == errno.EADDRINUSE:
@@ -162,6 +161,37 @@ def start() -> None:
     except OverflowError:
         logger.critical(f"Port {PORT} is not within 0-65535.")
         sys.exit(1)
+
+
+class SingleThreadedServer(ThreadedServer):
+    def _serve_client(self, sock, credentials):
+        chost, cport = sock.getpeername()
+        if credentials:
+            logger.info(
+                f"A client ({chost}) has connected to the server using the port {cport} (creds is {credentials})"
+            )
+        else:
+            logger.info(
+                f"A client ({chost}) has connected to the server using the port {cport}"
+            )
+        super()._serve_client(sock, credentials)
+
+    def start(self):
+        logger.debug("Listening...")
+        self._listen()
+        logger.debug("Registering...")
+        self._register()
+        logger.info(f"Server is now active and is listening on port {self.port}")
+        try:
+            while self.active:
+                self.accept()
+        except EOFError:
+            logger.info("Server closed by another thread")
+        except KeyboardInterrupt:
+            logger.info("A keyboard interrupt has been received, stopping server")
+        finally:
+            logger.info("The server has been terminated")
+            self.close()
 
 
 class SinglePackageManagerService(rpc.Service):
