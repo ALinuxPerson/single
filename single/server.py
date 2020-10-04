@@ -175,6 +175,12 @@ class SinglePackageManagerService(rpc.Service):
         logger.info(f"Being asked to check the status of the server")
         return ServerState(len(errors) == 0, errors)
 
+    def on_connect(self, conn):
+        logger.info(f"A client has been connected to the server")
+
+    def on_disconnect(self, conn):
+        logger.info(f"A client has disconnected from the server")
+
 
 if __name__ == "__main__":
     start()
