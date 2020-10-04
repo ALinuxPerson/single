@@ -1,3 +1,4 @@
+"""This provides some core classes and functions for `single`."""
 import attr
 from single import Package, Source, Flags, UnsupportedSystemError
 from single import utils as u
@@ -8,6 +9,17 @@ import toml
 
 @attr.s(auto_attribs=True, frozen=True)
 class ProviderMetadata:
+    """This contains metadata that should've been provided by the provider from provider.toml.
+
+    Args:
+        name: The name of the provider.
+        version: The version of the provider.
+        description: The description of the provider.
+        source_reference: The raw, uninitialized source class.
+        package_reference: The raw, uninitialized package class.
+        dependencies: The python dependencies the provider needs.
+    """
+
     name: str
     version: str
     description: str
@@ -21,6 +33,10 @@ class ProviderMetadata:
 
         Args:
             provider_path: The provider path.
+
+        Raises:
+            FileNotFoundError: If the provider path doesn't exist
+            NotADirectoryError: If the provider path isn't a directory.
 
         Returns:
             The provider metadata.
