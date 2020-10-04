@@ -8,15 +8,18 @@ A single package manager for everything.
     - [ ] Implement package updates
     - [ ] Implement some kind of configuration to read from
     - [ ] Implement context-like system for sources to grab for source-server-client interaction
+    - [ ] Implement unix socket support
  - [ ] Implement server
     - [ ] Implement unified package installation
     - [ ] Implement unified package uninstallation
     - [ ] Implement unified package updates
     - [ ] Implement some kind of configuration to read from
+    - [ ] Implement unix socket support
  - [ ] Implement glue for server
     - [ ] Implement unified package installation glue
     - [ ] Implement unified package uninstallation glue
     - [ ] Implement unified package updates glue
+    - [x] Implement unix socket support
  - [ ] Implement extensive documentation
  - [ ] Implement tests
  - [ ] Make flags actually do something
