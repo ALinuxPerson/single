@@ -200,8 +200,8 @@ class SinglePackageManagerService(rpc.Service):
         logger.info("Reloading providers...")
         load_providers()
 
-    @staticmethod
-    def exposed_status() -> ServerState:
+    @property
+    def exposed_status(self) -> ServerState:
         logger.info(f"Being asked to check the status of the server")
         return ServerState(len(errors) == 0, errors)
 
