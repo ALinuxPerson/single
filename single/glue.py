@@ -8,5 +8,8 @@ class SinglePackageManager(Glue):
     def status(self) -> ServerState:
         return self._conn.root.status
 
+    def close(self) -> None:
+        return self._conn.root.close()
+
     def reload_providers(self) -> None:
         return self._conn.root.reload_providers()

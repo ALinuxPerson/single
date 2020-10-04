@@ -17,6 +17,9 @@ PORT = 0
 loaded_providers: t.List[sc.ProviderMetadata] = []
 errors: t.List[Exception] = []
 
+# noinspection PyTypeChecker
+server: "SingleThreadedServer" = None  # type: ignore # will be initialized later on
+
 
 def find_providers(dirs: t.List[Path] = None) -> t.List[Path]:
     """This finds providers from directories.
@@ -148,6 +151,8 @@ def init() -> None:
 
 
 def start() -> None:
+    global server
+
     init()
     try:
         server = SingleThreadedServer(SinglePackageManagerService, port=PORT)
@@ -204,6 +209,11 @@ class SinglePackageManagerService(rpc.Service):
     def exposed_status(self) -> ServerState:
         logger.info(f"Being asked to check the status of the server")
         return ServerState(len(errors) == 0, errors)
+
+    @staticmethod
+    def exposed_close() -> None:
+        logger.info("Being asked to close the server")
+        return server.close()
 
     def on_disconnect(self, conn):
         logger.info(f"A client has disconnected from the server")
