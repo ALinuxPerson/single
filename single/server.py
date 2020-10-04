@@ -83,9 +83,9 @@ def get_providers(dirs: t.List[Path] = None) -> t.List[sc.ProviderMetadata]:
             ml_error(
                 f"Provider '{provider_metadata.name}' is not loaded\n"
                 f"Your system is unsupported:\n"
-                f"{error.message}\n"
+                f"{error.message.capitalize()}\n"
                 f"Action needed:\n"
-                f"{error.action_needed}"
+                f"{error.action_needed.capitalize()}"
             )
             errors.append(error)
             continue
