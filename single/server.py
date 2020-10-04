@@ -180,8 +180,8 @@ def set_ports() -> None:
         sys.exit(1)
 
 
-def init() -> None:
-    """This initializes or prepares the server for starting.
+def prepare_server() -> None:
+    """This prepares the server for starting.
 
     Notes:
           Note that this does not start the server; it merely initializes the basic functions of the server.
@@ -190,7 +190,7 @@ def init() -> None:
         Nothing.
     """
     set_logging_level(os.getenv("SINGLES_LOGGING_LEVEL", "INFO"))
-    logger.debug("Initializing server...")
+    logger.debug("Preparing server for starting...")
     set_ports()
     load_providers()
 
@@ -203,7 +203,7 @@ def start() -> None:
     """
     global server
 
-    init()
+    prepare_server()
     try:
         server = SingleThreadedServer(SinglePackageManagerService, port=PORT)
         server.start()
