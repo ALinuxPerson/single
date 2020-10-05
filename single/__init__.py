@@ -1,5 +1,5 @@
 from single.models import Package, Source
-from single.enums import Flags
+from single.enums import Flag
 from single.exceptions import UnsupportedSystemError
 from single.core import process_flags
 

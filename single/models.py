@@ -1,6 +1,6 @@
 """These are the common core models to inherit from when creating a provider."""
 import attr
-from single.enums import Flags
+from single.enums import Flag
 import typing as t
 
 
@@ -30,7 +30,7 @@ class Source:
     context: "Context"
 
     @property
-    def FLAGS(self) -> t.List[Flags]:
+    def FLAGS(self) -> t.List[Flag]:
         """This returns the number of flags that this source uses.
 
         Returns:
