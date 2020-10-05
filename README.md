@@ -31,6 +31,7 @@ A single package manager for everything.
     - [ ] Implement `PARTIAL_UPGRADES_SUPPORTED` flag 
     - [ ] Implement `DOWNGRADE_SUPPORTED` flag
  - [x] Make docs more clear by differentiating sources
+ - [ ] Split server.py into separate files in a single folder
  - [ ] Publish package to PyPi
 
 # License
