@@ -32,6 +32,11 @@ def flatten_list(list_: t.List[t.Any]) -> t.List[t.Any]:
     Args:
         list_: The list to flatten.
 
+    Examples:
+        >>> nested_list = [[1, 2], [3, 4, 5], [6], [7, 8, 9, 10]]
+        >>> flatten_list(nested_list)
+        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
     Returns:
         The flattened list.
     """
