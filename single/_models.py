@@ -2,8 +2,8 @@
 import attr
 import typing as t
 from pathlib import Path
-import rpyc
-from rpyc.utils.factory import unix_connect
+import rpyc  # type: ignore
+from rpyc.utils.factory import unix_connect  # type: ignore
 
 
 @attr.s(auto_attribs=True, frozen=True)
