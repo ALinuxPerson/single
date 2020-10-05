@@ -1,6 +1,7 @@
 """These are the common core models to inherit from when creating a provider."""
 import attr
 from single.enums import Flag
+from single.context import VoidContext, Context
 import typing as t
 
 
@@ -27,7 +28,7 @@ class Package:
 
 @attr.s(auto_attribs=True)
 class Source:
-    context: "Context"
+    context: "Context" = VoidContext()
 
     @property
     def FLAGS(self) -> t.List[Flag]:
