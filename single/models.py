@@ -28,7 +28,7 @@ class Package:
 
 @attr.s(auto_attribs=True)
 class Source:
-    context: "Context" = VoidContext()
+    context: Context = VoidContext()
 
     @property
     def FLAGS(self) -> t.List[Flag]:
