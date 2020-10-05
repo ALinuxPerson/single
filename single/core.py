@@ -49,7 +49,7 @@ class ProviderMetadata:
             )
 
         metadata_path = provider_path / "provider.toml"
-        metadata = toml.loads(metadata_path.read_text())["metadata"]  # type: ignore
+        metadata = toml.loads(metadata_path.read_text())["metadata"]
         module = u.get_module(provider_path / "__init__.py")
         source_ref = getattr(module, metadata["source_name"])
         package_ref = getattr(module, metadata["package_name"])
