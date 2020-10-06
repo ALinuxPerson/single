@@ -1,10 +1,13 @@
 import typer
 from single.server import start
+from single.server import enums as e
 
 
 def main(
     port: int = typer.Option(25000, help="The port to start the server"),
-    logging_level: str = typer.Option("info", help="The logging level."),
+    logging_level: e.LoggingLevel = typer.Option(
+        e.LoggingLevel.INFO, help="The logging level."
+    ),
 ) -> None:
     """This is a server for single."""
     start(port, logging_level)
