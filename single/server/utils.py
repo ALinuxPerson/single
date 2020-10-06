@@ -24,13 +24,14 @@ def set_logging_level(logging_level: enums.LoggingLevel) -> None:
     logger.add(sys.stderr, level=logging_level.value)
 
 
-def load_providers(provider_list: t.List[ProviderMetadata]) -> t.List[Exception]:
+def load_providers(
+    provider_list: t.List[ProviderMetadata], errors_list: t.List[Exception]
+) -> None:
     logger.info("Loading the providers....")
 
     providers, errors = get_providers()
     provider_list.extend(providers)
-
-    return errors
+    errors_list.extend(errors_list)
 
 
 def ml_error(*message: str) -> None:

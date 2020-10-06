@@ -9,13 +9,14 @@ import errno
 import sys
 
 providers: t.List[ProviderMetadata] = []
+errors: t.List[Exception] = []
 
 
 def prepare_server(logging_level: enums.LoggingLevel) -> None:
     utils.initialize_logger(logger)
     utils.set_logging_level(logging_level)
     logger.debug("Preparing to start the server...")
-    utils.load_providers(providers)
+    utils.load_providers(providers, errors)
 
 
 def start(port: int, logging_level: enums.LoggingLevel) -> None:
