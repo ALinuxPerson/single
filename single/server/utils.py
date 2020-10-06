@@ -31,7 +31,13 @@ def load_providers(
 
     providers, errors = get_providers()
     provider_list.extend(providers)
+    logger.trace(
+        f"Provider list after merge with providers from get_providers(): {provider_list}"
+    )
     errors_list.extend(errors_list)
+    logger.trace(
+        f"Error list after merge with errors from get_providers(): {errors_list}"
+    )
 
 
 def ml_error(*message: str) -> None:
@@ -51,14 +57,20 @@ def find_providers(dirs: t.List[Path] = None) -> t.List[Path]:
         A list of paths which could be providers.
     """
     logger.debug("Finding providers...")
+    logger.trace(f"find_providers(dirs={dirs})")
     dirs = dirs or PROVIDERS_DIRS
+    logger.trace(f"Directories after processing: {dirs}")
     logger.debug(f"Directories chosen: {utils.prettify_list(dirs)}")
+    logger.trace(f"Entering for loop to check whether or not directories exist")
     for dir_ in dirs:
+        logger.trace(f"Current directory: {dir_}")
         if not dir_.exists():
             logger.debug(f"Directory {dir_} doesn't exist, continuing.")
             dirs.remove(dir_)
     dirs_iterdir = [dir_.iterdir() for dir_ in dirs]
+    logger.trace(f"All accepted directories after exist check: {dirs_iterdir}")
     all_paths = utils.flatten_list(dirs_iterdir)
+    logger.trace(f"Flattened accepted directories: {all_paths}")
     return [path for path in all_paths if path.is_dir()]
 
 
@@ -96,6 +108,7 @@ def preprocess_provider(
 def postprocess_provider(
     provider: ProviderMetadata,
 ) -> t.Optional[UnsupportedSystemError]:
+    logger.debug(f"Post-processing provider '{provider.name}'")
     try:
         provider.source_reference().supported()
     except UnsupportedSystemError as error:
@@ -115,13 +128,21 @@ def postprocess_provider(
 def get_providers(
     dirs: t.List[Path] = None,
 ) -> t.Tuple[t.List[ProviderMetadata], t.List[Exception]]:
+    logger.trace(f"get_providers(dirs={dirs})")
     dirs = dirs or PROVIDERS_DIRS
+    logger.trace(f"Directories after processing: {dirs}")
     possible_providers = find_providers(dirs)
+    logger.trace(f"Possible providers: {possible_providers}")
     provider_metadata: t.List[ProviderMetadata] = []
     errors: t.List[Exception] = []
 
+    logger.trace(
+        "Now iterating through all providers to see if each are fit to be used"
+    )
     for provider in possible_providers:
+        logger.trace(f"Current provider: {provider}")
         preprocessed_provider = preprocess_provider(provider)
+        logger.trace(f"Pre-processed provider: {preprocessed_provider}")
         if isinstance(preprocessed_provider, Exception):
             errors.append(preprocessed_provider)
             continue
@@ -133,6 +154,9 @@ def get_providers(
         logger.success(f"Loaded provider '{preprocessed_provider.name}'")
         provider_metadata.append(preprocessed_provider)
 
+    logger.trace(
+        f"After for loop: provider_metadata={provider_metadata}, errors={errors}"
+    )
     logger.info(
         f"{len(provider_metadata)}/{len(possible_providers)} provider(s) loaded"
     )
