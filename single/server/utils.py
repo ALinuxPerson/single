@@ -37,7 +37,7 @@ def load_providers(
 def ml_error(*message: str) -> None:
     combined_msg = " ".join(message)
 
-    for line in combined_msg:
+    for line in combined_msg.splitlines():
         logger.error(line)
 
 
