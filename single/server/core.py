@@ -15,6 +15,7 @@ def prepare_server(logging_level: enums.LoggingLevel) -> None:
     utils.initialize_logger(logger)
     utils.set_logging_level(logging_level)
     logger.debug("Preparing to start the server...")
+    utils.load_providers(providers)
 
 
 def start(port: int, logging_level: enums.LoggingLevel) -> None:
