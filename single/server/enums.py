@@ -7,3 +7,4 @@ class LoggingLevel(e.Enum):
     WARNING = "WARNING"
     ERROR = "ERROR"
     CRITICAL = "CRITICAL"
+    SUCCESS = "SUCCESS"
