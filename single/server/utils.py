@@ -34,7 +34,7 @@ def load_providers(
     logger.trace(
         f"Provider list after merge with providers from get_providers(): {provider_list}"
     )
-    errors_list.extend(errors_list)
+    errors_list.extend(errors)
     logger.trace(
         f"Error list after merge with errors from get_providers(): {errors_list}"
     )
