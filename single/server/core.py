@@ -5,6 +5,8 @@ from loguru import logger
 from rpyc.utils.server import ThreadedServer
 from rpyc import Service
 import typing as t
+import errno
+import sys
 
 providers: t.List[ProviderMetadata] = []
 
@@ -22,6 +24,16 @@ def start(port: int, logging_level: enums.LoggingLevel) -> None:
         server.start()
     except OverflowError:
         logger.critical(f"The port {port} is not within 0-65535.")
+        sys.exit(1)
+    except PermissionError:
+        logger.critical(f"The server is not allowed to use the port {port}.")
+        sys.exit(1)
+    except OSError as error:
+        if error.errno == errno.EADDRINUSE:
+            logger.critical(f"The port {port} is already in use.")
+            sys.exit(1)
+        else:
+            raise
 
 
 class SingleThreadedServer(ThreadedServer):
