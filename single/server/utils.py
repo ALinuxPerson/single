@@ -128,6 +128,7 @@ def get_providers(
         postprocessed_provider = postprocess_provider(preprocessed_provider)
         if postprocessed_provider:
             errors.append(postprocessed_provider)
+            continue
 
         logger.success(f"Loaded provider '{preprocessed_provider.name}'")
         provider_metadata.append(preprocessed_provider)
