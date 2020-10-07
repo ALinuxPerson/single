@@ -17,10 +17,6 @@ class DummySource(Source):
 
     def supported(self) -> None:
         process_flags(self.__class__.__name__, *self.FLAGS)
-        raise UnsupportedSystemError(
-            "The system doesn't have the appropriate libraries installed.",
-            "Install libraries 'libalpm', 'libapt' and 'libpython'.",
-        )
 
     def package(self, name: str) -> t.List[Package]:
         return [Package("dummy", "0.1.0", "This is a dummy package.", 2.0, 1.0)]
@@ -35,6 +31,6 @@ class DummySource(Source):
         pass
 
     def greet(self) -> None:
-        self.context.info(
-            f"Dummy Source Version 0.1.1\n\n" f"This is a dummy provider."
+        self.context.success(
+            f"Dummy Source Version 0.1.1\n" f"This is a dummy provider."
         )

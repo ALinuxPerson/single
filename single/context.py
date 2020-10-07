@@ -73,6 +73,17 @@ class Context:
         """
         raise NotImplementedError
 
+    def success(self, *message: str) -> None:
+        """Print a success message.
+
+        Args:
+            *message: The message.
+
+        Returns:
+            Nothing.
+        """
+        raise NotImplementedError
+
     def error(self, *message: str) -> None:
         """Print an error message.
 

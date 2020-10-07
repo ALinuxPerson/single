@@ -42,3 +42,9 @@ class ServerContext(Context):
 
         for line in combined_message.splitlines():
             self.logger.critical(line)
+
+    def success(self, *message: str) -> None:
+        combined_message = " ".join(message)
+
+        for line in combined_message.splitlines():
+            self.logger.success(line)
