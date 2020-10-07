@@ -102,3 +102,14 @@ class Source:
 
         """
         raise NotImplementedError
+
+    def greet(self) -> None:
+        """This is a simple greeting once a source is initialized.
+
+        Usually a source is initialized on post processing.
+        Of course, if you don't want a greeting you can just add `pass` instead.
+
+        Returns:
+            Nothing.
+        """
+        raise NotImplementedError

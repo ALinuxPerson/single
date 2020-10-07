@@ -110,9 +110,11 @@ def postprocess_provider(
     provider: ProviderMetadata, context: Context
 ) -> t.Optional[UnsupportedSystemError]:
     logger.debug(f"Post-processing provider '{provider.name}'")
+    # noinspection PyArgumentList
+    source_reference = provider.source_reference(context)  # some bug happened
+
     try:
-        # noinspection PyArgumentList
-        provider.source_reference(context).supported()  # some bug happened
+        source_reference.supported()
     except UnsupportedSystemError as error:
         ml_error(
             f"During source checks:\n"
@@ -123,6 +125,9 @@ def postprocess_provider(
             f"{error.action_needed}"
         )
         return error
+
+    logger.debug("Now greeting server")
+    source_reference.greet()
 
     return None
 

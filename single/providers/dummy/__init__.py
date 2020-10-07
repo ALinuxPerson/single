@@ -33,3 +33,8 @@ class DummySource(Source):
 
     def update_package(self, *packages: Package) -> None:
         pass
+
+    def greet(self) -> None:
+        self.context.info(
+            f"Dummy Source Version 0.1.1\n\n" f"This is a dummy provider."
+        )
