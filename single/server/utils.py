@@ -2,8 +2,9 @@ from single.server import enums
 from single.core import ProviderMetadata
 from single.constants import PROVIDERS_DIRS
 from toml.decoder import TomlDecodeError  # type: ignore
-from single import UnsupportedSystemError
-from single import utils
+from single import UnsupportedSystemError, utils
+from single.context import Context
+from single.server.context import ServerContext
 from pathlib import Path
 import loguru as log
 import typing as t
@@ -106,11 +107,12 @@ def preprocess_provider(
 
 
 def postprocess_provider(
-    provider: ProviderMetadata,
+    provider: ProviderMetadata, context: Context
 ) -> t.Optional[UnsupportedSystemError]:
     logger.debug(f"Post-processing provider '{provider.name}'")
     try:
-        provider.source_reference().supported()
+        # noinspection PyArgumentList
+        provider.source_reference(context).supported()  # some bug happened
     except UnsupportedSystemError as error:
         ml_error(
             f"During source checks:\n"
@@ -135,6 +137,7 @@ def get_providers(
     logger.trace(f"Possible providers: {possible_providers}")
     provider_metadata: t.List[ProviderMetadata] = []
     errors: t.List[Exception] = []
+    context: Context = ServerContext(logger)
 
     logger.trace(
         "Now iterating through all providers to see if each are fit to be used"
@@ -146,7 +149,7 @@ def get_providers(
         if isinstance(preprocessed_provider, Exception):
             errors.append(preprocessed_provider)
             continue
-        postprocessed_provider = postprocess_provider(preprocessed_provider)
+        postprocessed_provider = postprocess_provider(preprocessed_provider, context)
         if postprocessed_provider:
             errors.append(postprocessed_provider)
             continue
