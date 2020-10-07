@@ -29,6 +29,17 @@ class Context:
         {install,remove,update}_packages, maybe?
     """
 
+    def trace(self, *message: str) -> None:
+        """Print a trace message.
+
+        Args:
+            *message: The message.
+
+        Returns:
+            Nothing.
+        """
+        raise NotImplementedError
+
     def debug(self, *message: str) -> None:
         """Print a debug message.
 
@@ -92,6 +103,9 @@ class VoidContext(Context):
     This is a context where nothing gets printed out. It is intended to be used for direct access to sources.
     For example, interacting with a source directly through the Python interpreter.
     """
+
+    def trace(self, *message: str) -> None:
+        pass
 
     def debug(self, *message: str) -> None:
         pass
