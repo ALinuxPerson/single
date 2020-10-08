@@ -6,6 +6,16 @@ There are several uses to this:
  - To unify all existing package managers into one package manager as said above
  - To make it easier to find packages without hunting down multiple package managers
  - To just make life easier 
+ 
+# Well, who is this intended for?
+The single package manager is intended for:
+ - Developers
+ - Hackers
+ - Power users
+ - Command line enthusiasts
+ - Regular users
+ - Your grandma
+ - Your dog
 
 # Roadmap
 The roadmap is obsolete; go to [this link](https://github.com/ALinuxPerson/single/projects/1) instead.
