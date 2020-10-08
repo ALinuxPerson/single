@@ -5,7 +5,7 @@ This is a package manager meant to unify all package managers in a system into o
 There are several uses to this:
  - To unify all existing package managers into one package manager as said above
  - To make it easier to find packages without hunting down multiple package managers
- - To just make life easier as a developer
+ - To just make life easier 
 
 # Roadmap
 The roadmap is obsolete; go to [this link](https://github.com/ALinuxPerson/single/projects/1) instead.
