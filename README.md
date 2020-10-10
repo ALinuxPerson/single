@@ -17,6 +17,50 @@ The single package manager is intended for:
  - Your grandma
  - Your dog
  
+# This seems cool! How do I install it?
+Well, currently there is no easy way to install this as it is a work in progress right now and there are other
+priorities that rank higher than easy installation. But in case you still want to install it:
+
+## The dependencies
+ - Python 3.6 to 3.9
+ - Pip
+ - Poetry
+ 
+There are other dependencies, although it is handled by poetry. If you still want to see it though, see `pyproject.toml`
+or see the 'Big Thanks' section at the bottom of this readme to see at least some dependencies.
+
+# Installation
+
+1. Clone this repository.
+
+   ```bash
+   $ git clone https://github.com/ALinuxPerson/single.git
+   ```
+   
+2. Change directories into the repository.
+
+   ```bash
+   $ cd single
+   ```
+
+2. Build this using poetry.
+
+   ```bash
+   $ poetry build
+   ```
+   
+3. Change directories into `dist`.
+
+   ```bash
+   $ cd dist
+   ```
+   
+4. Install the file with the .whl extension using `pip` (or the .tar.gz if it doesn't work).
+
+   ```bash
+   $ pip install single-0.1.0-py3-none-any.whl
+   ```
+   
 # How easy is it to use then?
 It's simple! (note that this is subject to change; the code doing this isn't even created yet):
 
