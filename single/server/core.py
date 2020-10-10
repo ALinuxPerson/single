@@ -1,4 +1,4 @@
-from single.server import enums
+from single import enums
 from single.server import utils
 from single.core import ProviderMetadata
 from loguru import logger
