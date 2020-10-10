@@ -19,6 +19,18 @@ class ServerState:
     ok: bool
     errors: t.List[Exception]
 
+    @classmethod
+    def from_errors(cls, errors: t.List[Exception]) -> "ServerState":
+        """This constructs a server state object from an error list, presumably from a server.
+
+        Args:
+            errors: The list of errors.
+
+        Returns:
+            The server state.
+        """
+        return cls(len(errors) == 0, errors)
+
 
 @attr.s(auto_attribs=True)
 class Glue:

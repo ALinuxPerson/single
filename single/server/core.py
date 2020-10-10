@@ -1,6 +1,7 @@
 from single import enums
 from single.server import utils
 from single.core import ProviderMetadata
+from single._models import ServerState
 from loguru import logger
 from rpyc.utils.server import ThreadedServer
 from rpyc import Service
@@ -71,5 +72,25 @@ class SingleThreadedServer(ThreadedServer):
 
 
 class SinglePackageManagerService(Service):
-    def exposed_status(self) -> None:
-        pass
+    @property
+    def exposed_status(self) -> ServerState:
+        """This reloads providers.
+
+        Returns:
+            Nothing.
+        """
+        logger.info("Being asked to get the status of the server")
+        return ServerState.from_errors(errors)
+
+    @staticmethod
+    def exposed_reload_providers() -> None:
+        """This gets the current status of the server, including all recoverable errors found.
+
+        Returns:
+            The status of the server.
+        """
+        logger.info("Being asked to reload the providers")
+        utils.load_providers(providers, errors)
+
+    def on_disconnect(self, conn) -> None:
+        logger.info("A client has disconnected from the server")
