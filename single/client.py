@@ -4,7 +4,7 @@ import typing as t
 from single.server import start
 from single import enums
 
-app = ty.Typer()
+app = ty.Typer(help="This is the command line client for single.")
 
 
 @app.command()
