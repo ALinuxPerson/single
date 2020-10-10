@@ -105,6 +105,14 @@ documentation.
 # Roadmap
 The roadmap is obsolete; go to [this link](https://github.com/ALinuxPerson/single/projects/1) instead.
 
+# Big Thanks
+Big thanks to:
+- [**Poetry**](https://github.com/python-poetry/poetry) for easy dependency management
+- [**Typer**](https://github.com/tiangolo/typer) for easier creation of a command line
+- [**Loguru**](https://github.com/Delgan/loguru) for an already pretty out of box logging configuration
+- [**RPyC**](https://github.com/tomerfiliba-org/rpyc) for the easy rpc creation
+- The [**TOML**](https://github.com/uiri/toml) parsing library for the parsing of TOML
+- [**Rich**](https://github.com/willmcgugan/rich) text library for easy to use coloring of text
+
 # License
 This project is licensed under the [GNU GPLv3 License](https://choosealicense.com/licenses/gpl-3.0/).
-
