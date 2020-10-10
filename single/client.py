@@ -1,6 +1,8 @@
 """This is the command line client."""
 import typer as ty
 import typing as t
+from single.server import start
+from single import enums
 
 app = ty.Typer()
 
@@ -46,6 +48,15 @@ def update(
 ) -> None:
     """Updates packages."""
     pass
+
+
+@app.command()
+def server(
+    port: int = ty.Option(25000, help="The port to start the server"),
+    logging_level: enums.LoggingLevel = ty.Option("INFO", help="The logging level"),
+) -> None:
+    """This is the server for single."""
+    start(port, logging_level)
 
 
 def main() -> None:
