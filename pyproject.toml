@@ -7,7 +7,6 @@ license = "GPL-3.0+"
 
 [tool.poetry.dependencies]
 python = "^3.6"
-mypy = "^0.782"
 typer = "^0.3.2"
 toml = "^0.10.1"
 rich = "^7.1.0"
