@@ -99,6 +99,8 @@ $ single install dummy --provider apt
   manager on your system. Basically, this is the thing that does the unifying in the first place.
 - A **package** is well, basically just like any other package in any other package manager. It is self-explanatory.
 
+There are other internal terms in the source code as well (contexts, glue, etc.) that will be explained in the API
+documentation.
 
 # Roadmap
 The roadmap is obsolete; go to [this link](https://github.com/ALinuxPerson/single/projects/1) instead.
