@@ -80,9 +80,7 @@ $ single install dummy --provider apt
 ```
 
 # Cool, but what is a 'provider'? and probably other terms as well?
-It's good that you know.
-
-- A **provider** This stores the metadata for sources and packages, such as names, descriptions, etc. If a provider
+- A **provider** stores the metadata for sources and packages, such as names, descriptions, etc. If a provider
   were a tree, the provider would provide metadata, sources, and packages, in which sources would provide packages.
   Little hard to understand? This is how it would look visually:
   ```
