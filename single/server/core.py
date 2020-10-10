@@ -1,4 +1,4 @@
-from single import enums
+from single import enums, Package
 from single.server import utils
 from single.core import ProviderMetadata
 from single._models import ServerState
@@ -91,6 +91,24 @@ class SinglePackageManagerService(Service):
         """
         logger.info("Being asked to reload the providers")
         utils.load_providers(providers, errors)
+
+    @staticmethod
+    def search(
+        packages: t.List[str], providers_: t.List[ProviderMetadata]
+    ) -> t.List[Package]:
+        pass
+
+    @staticmethod
+    def install(packages: t.List[str], providers_: t.List[ProviderMetadata]) -> None:
+        pass
+
+    @staticmethod
+    def remove(packages: t.List[str], providers_: t.List[ProviderMetadata]) -> None:
+        pass
+
+    @staticmethod
+    def update(packages: t.List[str], providers_: t.List[ProviderMetadata]) -> None:
+        pass
 
     def on_disconnect(self, conn) -> None:
         logger.info("A client has disconnected from the server")
