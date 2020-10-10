@@ -1,10 +1,12 @@
-"""This is the command line client."""
+"""This is the command line frontend for the single server and the single client."""
 import typer as ty
 import typing as t
 from single.server import start
 from single import enums
 
-app = ty.Typer(help="This is the command line client for single.")
+app = ty.Typer(
+    help="This is the command line frontend for the single server and the single client."
+)
 
 
 @app.command()
@@ -16,7 +18,7 @@ def install(
         help="The providers to use. By default every provider is used.",
     ),
 ) -> None:
-    """Installs packages."""
+    """This is a client frontend for package installation."""
     pass
 
 
@@ -29,7 +31,7 @@ def remove(
         help="The providers to use. By default every provider is used.",
     ),
 ) -> None:
-    """Removes packages."""
+    """This is a client frontend for package removal."""
     pass
 
 
@@ -46,16 +48,16 @@ def update(
         help="The providers to use. By default every provider is used.",
     ),
 ) -> None:
-    """Updates packages."""
+    """This is a client frontend for package updating."""
     pass
 
 
 @app.command()
 def server(
-    port: int = ty.Option(25000, help="The port to start the server"),
-    logging_level: enums.LoggingLevel = ty.Option("INFO", help="The logging level"),
+    port: int = ty.Option(25000, help="The port to broadcast to."),
+    logging_level: enums.LoggingLevel = ty.Option("INFO", help="The logging level."),
 ) -> None:
-    """This is the server for single."""
+    """This is the command line frontend for the single server."""
     start(port, logging_level)
 
 
