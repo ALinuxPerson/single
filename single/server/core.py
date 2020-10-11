@@ -1,4 +1,4 @@
-"""These are some criticla functions and classes for core single server functionality."""
+"""These are some critical functions and classes for core single server functionality."""
 from single import _enums as enums, Package
 from single.server import utils
 from single.core import ProviderMetadata
