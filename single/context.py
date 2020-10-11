@@ -127,6 +127,9 @@ class VoidContext(Context):
     def warn(self, *message: str) -> None:
         pass
 
+    def success(self, *message: str) -> None:
+        pass
+
     def error(self, *message: str) -> None:
         pass
 
