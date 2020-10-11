@@ -6,3 +6,13 @@ class System(e.Enum):
     MAC = "Darwin"
     LINUX = "Linux"
     BSD = "FreeBSD"
+
+
+class LoggingLevel(e.Enum):
+    TRACE = "TRACE"
+    DEBUG = "DEBUG"
+    INFO = "INFO"
+    WARNING = "WARNING"
+    ERROR = "ERROR"
+    CRITICAL = "CRITICAL"
+    SUCCESS = "SUCCESS"

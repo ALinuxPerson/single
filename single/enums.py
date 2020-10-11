@@ -12,13 +12,3 @@ class Flag(e.Enum):
     LINUX_SUPPORTED = e.auto()
     BSD_SUPPORTED = e.auto()
     DOWNGRADE_SUPPORTED = e.auto()
-
-
-class LoggingLevel(e.Enum):
-    TRACE = "TRACE"
-    DEBUG = "DEBUG"
-    INFO = "INFO"
-    WARNING = "WARNING"
-    ERROR = "ERROR"
-    CRITICAL = "CRITICAL"
-    SUCCESS = "SUCCESS"

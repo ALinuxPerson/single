@@ -1,4 +1,4 @@
-from single import enums
+from single import _enums as enums
 from single.core import ProviderMetadata
 from single.constants import PROVIDERS_DIRS
 from toml.decoder import TomlDecodeError  # type: ignore

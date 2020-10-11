@@ -1,4 +1,4 @@
-from single import enums, Package
+from single import _enums as enums, Package
 from single.server import utils
 from single.core import ProviderMetadata
 from single._models import ServerState

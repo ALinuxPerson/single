@@ -2,7 +2,7 @@
 import typer as ty
 import typing as t
 from single.server import start
-from single import enums
+from single import _enums as enums
 
 app = ty.Typer(
     help="This is the command line frontend for the single server and the single client."
