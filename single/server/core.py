@@ -96,19 +96,19 @@ class SinglePackageManagerService(Service):
     def search(
         packages: t.List[str], providers_: t.List[ProviderMetadata]
     ) -> t.List[Package]:
-        pass
+        raise NotImplementedError
 
     @staticmethod
     def install(packages: t.List[str], providers_: t.List[ProviderMetadata]) -> None:
-        pass
+        raise NotImplementedError
 
     @staticmethod
     def remove(packages: t.List[str], providers_: t.List[ProviderMetadata]) -> None:
-        pass
+        raise NotImplementedError
 
     @staticmethod
     def update(packages: t.List[str], providers_: t.List[ProviderMetadata]) -> None:
-        pass
+        raise NotImplementedError
 
     def on_disconnect(self, conn) -> None:
         logger.info("A client has disconnected from the server")
