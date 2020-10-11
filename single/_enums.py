@@ -1,3 +1,4 @@
+"""These are some private enums that have no business being publicly accessible to the developer."""
 import enum as e
 
 

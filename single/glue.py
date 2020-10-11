@@ -1,3 +1,4 @@
+"""These are the "glue" or the objects holding the server and ide together in order to have some fancy ide features."""
 import attr
 from single._models import Glue, ServerState
 from single.core import ProviderMetadata
