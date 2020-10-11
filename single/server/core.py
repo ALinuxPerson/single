@@ -93,21 +93,27 @@ class SinglePackageManagerService(Service):
         utils.load_providers(providers, errors)
 
     @staticmethod
-    def search(
+    def exposed_search(
         packages: t.List[str], providers_: t.List[ProviderMetadata]
     ) -> t.List[Package]:
         raise NotImplementedError
 
     @staticmethod
-    def install(packages: t.List[str], providers_: t.List[ProviderMetadata]) -> None:
+    def exposed_install(
+        packages: t.List[str], providers_: t.List[ProviderMetadata]
+    ) -> None:
         raise NotImplementedError
 
     @staticmethod
-    def remove(packages: t.List[str], providers_: t.List[ProviderMetadata]) -> None:
+    def exposed_remove(
+        packages: t.List[str], providers_: t.List[ProviderMetadata]
+    ) -> None:
         raise NotImplementedError
 
     @staticmethod
-    def update(packages: t.List[str], providers_: t.List[ProviderMetadata]) -> None:
+    def exposed_update(
+        packages: t.List[str], providers_: t.List[ProviderMetadata]
+    ) -> None:
         raise NotImplementedError
 
     def on_disconnect(self, conn) -> None:
