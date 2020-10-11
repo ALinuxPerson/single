@@ -97,24 +97,65 @@ class SinglePackageManagerService(Service):
     def exposed_search(
         packages: t.List[str], providers_: t.List[ProviderMetadata]
     ) -> t.List[Package]:
+        """This searches for packages in all providers (or some).
+
+        Args:
+            packages: The packages to search for.
+            providers_: The providers to search packages from.
+
+        Returns:
+            A list of packages found.
+        """
         raise NotImplementedError
 
     @staticmethod
     def exposed_install(
         packages: t.List[str], providers_: t.List[ProviderMetadata]
     ) -> None:
+        """This installs packages by finding and installing them from different providers.
+
+        Args:
+            packages: The packages to install.
+            providers_: The providers to search and install packages from.
+
+        Returns:
+            Nothing.
+        """
         raise NotImplementedError
 
     @staticmethod
     def exposed_remove(
         packages: t.List[str], providers_: t.List[ProviderMetadata]
     ) -> None:
+        """This removes packages from different providers if they are from a register.
+
+        Args:
+            packages: The packages to remove.
+            providers_: The provider to remove packages from.
+
+        Returns:
+            Nothing.
+        """
         raise NotImplementedError
 
     @staticmethod
     def exposed_update(
         packages: t.List[str], providers_: t.List[ProviderMetadata]
     ) -> None:
+        """This updates packages from different providers. If the package list is empty then it will try to update
+        all packages.
+
+        Warnings:
+            This function may raise an exception if the packages aren't empty and there is a provider which doesn't
+            support partial upgrades.
+
+        Args:
+            packages: The packages to update.
+            providers_: The providers to find updates from.
+
+        Returns:
+            Nothing.
+        """
         raise NotImplementedError
 
     def on_disconnect(self, conn) -> None:
