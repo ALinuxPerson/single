@@ -1,4 +1,4 @@
-"""These are just some utilites used by the single server."""
+"""These are just some utilities used by the single server."""
 from single import _enums as enums
 from single.core import ProviderMetadata
 from single.constants import PROVIDERS_DIRS
