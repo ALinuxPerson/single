@@ -73,25 +73,25 @@ class SingleThreadedServer(ThreadedServer):
 
 
 class SinglePackageManagerService(Service):
-    @property
-    def exposed_status(self) -> ServerState:
+    @staticmethod
+    def exposed_reload_providers() -> None:
         """This reloads providers.
 
         Returns:
             Nothing.
         """
-        logger.info("Being asked to get the status of the server")
-        return ServerState.from_errors(errors)
+        logger.info("Being asked to reload the providers")
+        utils.load_providers(providers, errors)
 
-    @staticmethod
-    def exposed_reload_providers() -> None:
+    @property
+    def exposed_status(self) -> ServerState:
         """This gets the current status of the server, including all recoverable errors found.
 
         Returns:
             The status of the server.
         """
-        logger.info("Being asked to reload the providers")
-        utils.load_providers(providers, errors)
+        logger.info("Being asked to get the status of the server")
+        return ServerState.from_errors(errors)
 
     @staticmethod
     def exposed_search(
