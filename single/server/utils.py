@@ -4,7 +4,7 @@ from single.constants import PROVIDERS_DIRS
 from toml.decoder import TomlDecodeError  # type: ignore
 from single import UnsupportedSystemError, utils
 from single.context import Context
-from single.server.context import ServerContext
+from single.context import ServerContext
 from pathlib import Path
 import loguru as log
 import typing as t
