@@ -160,9 +160,7 @@ def preprocess_provider(
         return error
 
 
-def postprocess_provider(
-    provider: ProviderMetadata, context: Context
-) -> t.Optional[UnsupportedSystemError]:
+def postprocess_provider(provider: ProviderMetadata, context: Context) -> None:
     """This brings a provider to the post-processing phase.
 
     The post-processing phase tests the source reference grabbed from the provider metadata
@@ -191,7 +189,7 @@ def postprocess_provider(
             f"These are the actions that need to be done:\n"
             f"{error.action_needed}"
         )
-        return error
+        raise
 
     logger.debug("Now greeting server")
     source_reference.greet()
@@ -230,9 +228,11 @@ def get_providers(
         if isinstance(preprocessed_provider, Exception):
             errors.append(preprocessed_provider)
             continue
-        postprocessed_provider = postprocess_provider(preprocessed_provider, context)
-        if postprocessed_provider:
-            errors.append(postprocessed_provider)
+
+        try:
+            postprocess_provider(preprocessed_provider, context)
+        except UnsupportedSystemError as error:
+            errors.append(error)
             continue
 
         logger.success(f"Loaded provider '{preprocessed_provider.name}'")

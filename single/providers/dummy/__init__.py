@@ -17,6 +17,10 @@ class DummySource(Source):
 
     def supported(self) -> None:
         process_flags(self.__class__.__name__, *self.FLAGS)
+        raise UnsupportedSystemError(
+            "a",
+            "",
+        )
 
     def package(self, name: str) -> t.List[Package]:
         return [Package("dummy", "0.1.0", "This is a dummy package.", 2.0, 1.0)]
