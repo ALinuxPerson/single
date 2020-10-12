@@ -8,6 +8,32 @@ import typing as t
 from single._enums import System
 from single import Flag
 import platform
+import attr
+
+
+@attr.s(auto_attribs=True, frozen=True)
+class ServerState:
+    """This is the server state.
+
+    Args:
+        ok: Whether or not the server is in an okay state or not.
+        errors: The recoverable errors found.
+    """
+
+    ok: bool
+    errors: t.List[Exception]
+
+    @classmethod
+    def from_errors(cls, errors: t.List[Exception]) -> "ServerState":
+        """This constructs a server state object from an error list, presumably from a server.
+
+        Args:
+            errors: The list of errors.
+
+        Returns:
+            The server state.
+        """
+        return cls(len(errors) == 0, errors)
 
 
 def get_module(path: Path) -> ModuleType:

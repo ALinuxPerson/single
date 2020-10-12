@@ -2,7 +2,7 @@
 from single import _enums as enums, Package
 from single.server import utils
 from single.core import ProviderMetadata
-from single._models import ServerState
+from single.utils import ServerState
 from loguru import logger
 from rpyc.utils.server import ThreadedServer
 from rpyc import Service

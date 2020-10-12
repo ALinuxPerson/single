@@ -1,6 +1,7 @@
 """These are the "glue" or the objects holding the server and ide together in order to have some fancy ide features."""
 import attr
-from single._models import Glue, ServerState
+from single._models import Glue
+from single import utils
 from single.core import ProviderMetadata
 from single import Package
 import typing as t
@@ -9,7 +10,7 @@ import typing as t
 @attr.s(auto_attribs=True)
 class SinglePackageManager(Glue):
     @property
-    def status(self) -> ServerState:
+    def status(self) -> utils.ServerState:
         """This gets the current status of the server, including all recoverable errors found.
 
         Returns:
