@@ -16,12 +16,28 @@ logger: "log.Logger" = None  # type: ignore  # will be initialized later
 
 
 def initialize_logger(logger_: "log.Logger") -> None:
+    """This initializes the logger.
+
+    Args:
+        logger_: The logger.
+
+    Returns:
+        Nothing.
+    """
     global logger
 
     logger = logger_
 
 
 def set_logging_level(logging_level: enums.LoggingLevel) -> None:
+    """This sets the logging level without the use of an environment variable.
+
+    Args:
+        logging_level: The logging level.
+
+    Returns:
+        Nothing.
+    """
     logger.remove()
     logger.add(sys.stderr, level=logging_level.value)
 
@@ -29,6 +45,15 @@ def set_logging_level(logging_level: enums.LoggingLevel) -> None:
 def load_providers(
     provider_list: t.List[ProviderMetadata], errors_list: t.List[Exception]
 ) -> None:
+    """This loads all providers from all found providers in get_providers.
+
+    Args:
+        provider_list: The provider list.
+        errors_list: The error list.
+
+    Returns:
+        Nothing.
+    """
     logger.info("Loading the providers....")
 
     providers, errors = get_providers()
@@ -43,6 +68,14 @@ def load_providers(
 
 
 def ml_error(*message: str) -> None:
+    """This prints out a multi line error message.
+
+    Args:
+        *message: The message.
+
+    Returns:
+        Nothing.
+    """
     combined_msg = " ".join(message)
 
     for line in combined_msg.splitlines():
@@ -77,6 +110,15 @@ def find_providers(dirs: t.List[Path] = None) -> t.List[Path]:
 
 
 def preprocess_provider_error(error: str, provider_dir: Path) -> None:
+    """This is a shortcut for printing out a pre-processing provider error.
+
+    Args:
+        error: The error.
+        provider_dir: The provider directory since the ProviderMetadata can't be initialized at this point.
+
+    Returns:
+        Nothing.
+    """
     ml_error(
         "During initialization of a provider:\n"
         f"A provider has encountered an error (path is {provider_dir})\n"
@@ -87,6 +129,17 @@ def preprocess_provider_error(error: str, provider_dir: Path) -> None:
 def preprocess_provider(
     provider_dir: Path,
 ) -> t.Union[ProviderMetadata, Exception]:
+    """This brings the provider to the pre-processing phase.
+
+    The pre processing phase tries to get provider metadata from a provider folder. This phase
+    will fail if an error occurs while trying to get the provider metadata.
+
+    Args:
+        provider_dir: The provider directory.
+
+    Returns:
+        Provider metadata if nothing go
+    """
     logger.debug(f"Pre-processing provider (path is '{provider_dir}')")
     try:
         return ProviderMetadata.from_provider(provider_dir)
@@ -110,6 +163,19 @@ def preprocess_provider(
 def postprocess_provider(
     provider: ProviderMetadata, context: Context
 ) -> t.Optional[UnsupportedSystemError]:
+    """This brings a provider to the post-processing phase.
+
+    The post-processing phase tests the source reference grabbed from the provider metadata
+    if it's supported or not. This is also the phase where we'll know whether a provider
+    is fit to be added to a provider list.
+
+    Args:
+        provider: The provider metadata.
+        context: The context.
+
+    Returns:
+        Nothing.
+    """
     logger.debug(f"Post-processing provider '{provider.name}'")
     # noinspection PyArgumentList
     source_reference = provider.source_reference(context)  # some bug happened
@@ -136,6 +202,15 @@ def postprocess_provider(
 def get_providers(
     dirs: t.List[Path] = None,
 ) -> t.Tuple[t.List[ProviderMetadata], t.List[Exception]]:
+    """This gets all providers from a provider directory (or optionally specified) and put them in a
+    series of few tests to determine whether they're fit to be added to a provider list or not.
+
+    Args:
+        dirs: The provider directories.
+
+    Returns:
+        A list of provider metadata and a list of all exceptions gathered.
+    """
     logger.trace(f"get_providers(dirs={dirs})")
     dirs = dirs or PROVIDERS_DIRS
     logger.trace(f"Directories after processing: {dirs}")

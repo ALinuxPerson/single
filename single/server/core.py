@@ -15,6 +15,14 @@ errors: t.List[Exception] = []
 
 
 def prepare_server(logging_level: enums.LoggingLevel) -> None:
+    """This prepares the server for starting.
+
+    Args:
+        logging_level: The logging level.
+
+    Returns:
+        Nothing.
+    """
     utils.initialize_logger(logger)
     utils.set_logging_level(logging_level)
     logger.debug("Preparing to start the server...")
@@ -22,6 +30,15 @@ def prepare_server(logging_level: enums.LoggingLevel) -> None:
 
 
 def start(port: int, logging_level: enums.LoggingLevel) -> None:
+    """This starts the server.
+
+    Args:
+        port: The port to broadcast the server on.
+        logging_level: The logging level.
+
+    Returns:
+        Nothing.
+    """
     prepare_server(logging_level)
     try:
         server = SingleThreadedServer(SinglePackageManagerService, port=port)
