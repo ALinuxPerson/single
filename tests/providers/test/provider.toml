@@ -1,0 +1,7 @@
+[metadata]
+name = "Test Provider"
+version = "0.1.0"
+description = "Testing Provider."
+source_name = "Source"
+package_name = "Package"
+dependencies = []
