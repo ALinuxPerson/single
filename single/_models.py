@@ -1,6 +1,5 @@
 """These are some models that can only be overridden within the `single` package."""
 import attr
-import typing as t
 from pathlib import Path
 import rpyc  # type: ignore
 from rpyc.utils.factory import unix_connect  # type: ignore
