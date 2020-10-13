@@ -4,8 +4,8 @@ from single.server import utils
 from single.core import ProviderMetadata
 from single.utils import ServerState
 from loguru import logger
-from rpyc.utils.server import ThreadedServer
-from rpyc import Service
+from rpyc.utils.server import ThreadedServer  # type: ignore  # no stubs found
+from rpyc import Service  # type: ignore  # no stubs found
 import typing as t
 import errno
 import sys
