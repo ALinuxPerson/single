@@ -45,6 +45,9 @@ def get_module(path: Path) -> ModuleType:
     Returns:
         The module.
     """
+    if path.is_dir():
+        raise IsADirectoryError("directories are not supported")
+
     module_name, _ = os.path.splitext(path.name)
     spec = importlib.util.spec_from_file_location(module_name, str(path))
     module = importlib.util.module_from_spec(spec)
