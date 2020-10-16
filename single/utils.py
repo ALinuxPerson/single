@@ -5,7 +5,7 @@ from types import ModuleType
 import importlib.util
 import os
 import typing as t
-from single._enums import System
+from single.enums import System
 from single import Flag
 import platform
 import attr

@@ -12,3 +12,12 @@ class Flag(e.Enum):
     LINUX_SUPPORTED = e.auto()
     BSD_SUPPORTED = e.auto()
     DOWNGRADE_SUPPORTED = e.auto()
+
+
+class System(e.Enum):
+    """This is a less error prone way of getting the system os name."""
+
+    WINDOWS = "Windows"
+    MAC = "Darwin"
+    LINUX = "Linux"
+    BSD = "FreeBSD"
