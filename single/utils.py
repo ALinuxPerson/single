@@ -80,7 +80,7 @@ def prettify_list(list_: t.List[t.Any]) -> str:
         list_: The list to prettify.
 
     Examples:
-        >>> things = ["shoebox", "horn", "matress", 10]
+        >>> things = ["shoebox", "horn", "mattress", 10]
         >>> prettify_list(things)
         'shoebox, horn, matress, 10'
 
