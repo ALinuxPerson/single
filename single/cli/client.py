@@ -1,9 +1,7 @@
 import typer as ty
 import typing as t
 
-app = ty.Typer(
-    help="This is the command line frontend for the single server and the single client."
-)
+app = ty.Typer(help="This is the command line frontend for the single client.")
 
 
 @app.command()
