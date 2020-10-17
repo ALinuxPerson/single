@@ -20,6 +20,7 @@ class Package(abc.ABC):
         version: The version of the package.
         install_size: The install size of the package.
         download_size: The download size of the package.
+        original_source: The original source of the package.
     """
 
     name: str
@@ -27,6 +28,7 @@ class Package(abc.ABC):
     description: str
     install_size: float
     download_size: float
+    original_source: "Source"
 
 
 @attr.s(auto_attribs=True)
