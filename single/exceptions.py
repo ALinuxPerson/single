@@ -1,8 +1,8 @@
 """These are some exceptions that should be raised by sources."""
 
 
-class UnsupportedSystemError(Exception):
-    """This is an error that should be raised on Source.supported if checks fail."""
+class SingleError(Exception):
+    """This is a generic error for single sources."""
 
     @property
     def message(self) -> str:
@@ -21,3 +21,7 @@ class UnsupportedSystemError(Exception):
             The actions needed for a source to work.
         """
         return self.args[1]
+
+
+class UnsupportedSystemError(SingleError):
+    """This is an error that should be raised on Source.supported if checks fail."""
