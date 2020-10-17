@@ -3,10 +3,11 @@ import attr
 from pathlib import Path
 import rpyc  # type: ignore
 from rpyc.utils.factory import unix_connect  # type: ignore
+import abc
 
 
 @attr.s(auto_attribs=True)
-class Glue:
+class Glue(abc.ABC):
     """This is a "glue".
 
     This is a "glue"; meaning a way to connect the server and the ide so that auto completion and syntax highlighting
@@ -22,6 +23,7 @@ class Glue:
     _conn: rpyc.Connection
 
     @classmethod
+    @abc.abstractmethod
     def from_host(cls, host: str, port: int) -> "Glue":
         """This establishes a connection to a server using a hostname and a port (ip addresses are also accepted).
 
@@ -37,6 +39,7 @@ class Glue:
         return cls(conn)
 
     @classmethod
+    @abc.abstractmethod
     def from_unix_socket(cls, path: Path) -> "Glue":
         """This establishes a connection to the server using a path that uses unix sockets.
 

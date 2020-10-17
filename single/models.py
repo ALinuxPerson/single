@@ -2,10 +2,11 @@
 import attr
 from single.context import VoidContext, Context
 import typing as t
+import abc
 
 
 @attr.s(auto_attribs=True, frozen=True)
-class Package:
+class Package(abc.ABC):
     """This class only provides metadata for a package.
 
     This class only provides metadata for a package. In order to install this, you must install it through
@@ -26,10 +27,11 @@ class Package:
 
 
 @attr.s(auto_attribs=True)
-class Source:
+class Source(abc.ABC):
     context: Context = VoidContext()
 
     @property
+    @abc.abstractmethod
     def backend_version(self) -> str:
         """This returns the backend version of the source.
 
