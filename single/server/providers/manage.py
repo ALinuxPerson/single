@@ -83,5 +83,5 @@ class SingleSource(Source):
         # yeah...
         if not self.sources:
             raise TypeError(
-                "__init__() missing 1 required positional argument: 'sources' (do providers=[...])"
+                "__init__() missing 1 required positional argument: 'sources' (do sources=[...])"
             )
