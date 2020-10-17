@@ -1,6 +1,7 @@
 """These are the common core models to inherit from when creating a provider."""
 import attr
 from single.context import VoidContext, Context
+from single.enums import System
 import typing as t
 import abc
 
@@ -29,6 +30,15 @@ class Package(abc.ABC):
 @attr.s(auto_attribs=True)
 class Source(abc.ABC):
     context: Context = VoidContext()
+
+    @property
+    @abc.abstractmethod
+    def os_supported(self) -> t.List[System]:
+        """This returns the operating systems supported by this source.
+
+        Returns:
+            The operating systems supported.
+        """
 
     @property
     @abc.abstractmethod
