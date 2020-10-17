@@ -2,6 +2,8 @@
 import attr
 from single.context import VoidContext, Context
 from single.enums import System
+from single import utils
+from single.exceptions import UnsupportedSystemError
 import typing as t
 import abc
 
@@ -53,9 +55,20 @@ class Source(abc.ABC):
     def supported(self) -> None:
         """This goes through a number of checks to see if the source supports a system.
 
+        Notes:
+            It is highly recommended that you put a `super().supported()` line on your source here.
+
         Returns:
             Nothing, or raise an UnsupportedSystemError.
         """
+        system = utils.system()
+        os_supported_values = [os.value for os in self.os_supported]
+        if system not in self.os_supported:
+            raise UnsupportedSystemError(
+                f"your system, {system.value}, is not compatible with this source.",
+                f"switch to the operating systems {utils.prettify_list(os_supported_values)} or contact the developers "
+                f"of this provider to make compatibility with your operating system.",
+            )
 
     @abc.abstractmethod
     def package(self, name: str) -> t.List[Package]:
