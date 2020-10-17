@@ -28,8 +28,8 @@ def postprocess_provider_error(
         f"During source checks:\n"
         f"The provider '{provider.name}' has encountered a fatal error:\n"
         f"From source '{provider.source_reference().__class__.__name__}':\n"
-        f"{error.message}\n\n"
+        f"{error.message.capitalize()}\n\n"
         f"These are the actions that need to be done:\n"
-        f"{error.action_needed}"
+        f"{error.action_needed.capitalize()}"
     )
     return error
