@@ -22,7 +22,7 @@ def test_server_state_from_errors() -> None:
 def test_get_module() -> None:
     utils_module = utils.get_module(current_dir.parent / "single" / "utils.py")
 
-    assert utils_module.get_system() == utils.get_system()  # type: ignore
+    assert utils_module.get_system() == utils.system()  # type: ignore
 
 
 def test_get_module_directory() -> None:
@@ -46,7 +46,7 @@ def test_prettify_list() -> None:
 
 def test_get_system() -> None:
     system = platform.system()
-    system_enum = utils.get_system()
+    system_enum = utils.system()
 
     if system == "Linux":
         assert system_enum == System.LINUX

@@ -89,11 +89,11 @@ def prettify_list(list_: t.List[t.Any]) -> str:
     return ", ".join([str(item) for item in list_])
 
 
-def get_system() -> System:
+def system() -> System:
     """This retrieves the current system os name as an enum.
 
     Returns:
         The system os name as an enum.
     """
-    system = platform.system()
-    return System(system)
+    system_ = platform.system()
+    return System(system_)
