@@ -66,17 +66,17 @@ It's simple! (note that this is subject to change; the code doing this isn't eve
 
 Install a package, let's say, `dummy`:
 ```bash
-$ single install dummy
+$ singlec install dummy
 ```
 
 Let's uninstall a package:
 ```bash
-$ single remove dummy
+$ singlec remove dummy
 ```
 
 But what if we want to install a package from the provider `apt`?:
 ```bash
-$ single install dummy --provider apt
+$ singlec install dummy --provider apt
 ```
 
 # Cool, but what is a 'provider'? and probably other terms as well?
