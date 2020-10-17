@@ -8,6 +8,10 @@ from single.core import ProviderMetadata
 from toml.decoder import TomlDecodeError
 from single.exceptions import UnsupportedSystemError
 from single.context import Context, ServerContext
+from single.server.providers.errors import (
+    preprocess_provider_error,
+    postprocess_provider_error,
+)
 
 
 def load_providers(
@@ -60,23 +64,6 @@ def find_providers(dirs: t.List[Path] = None) -> t.List[Path]:
     all_paths = utils.flatten_list(dirs_iterdir)
     logger.trace(f"Flattened accepted directories: {all_paths}")
     return [path for path in all_paths if path.is_dir()]
-
-
-def preprocess_provider_error(error: str, provider_dir: Path) -> None:
-    """This is a shortcut for printing out a pre-processing provider error.
-
-    Args:
-        error: The error.
-        provider_dir: The provider directory since the ProviderMetadata can't be initialized at this point.
-
-    Returns:
-        Nothing.
-    """
-    ml_error(
-        "During initialization of a provider:\n"
-        f"A provider has encountered an error (path is {provider_dir})\n"
-        f"{error}"
-    )
 
 
 def preprocess_provider(
@@ -134,15 +121,7 @@ def postprocess_provider(provider: ProviderMetadata, context: Context) -> None:
     try:
         source_reference.supported()
     except UnsupportedSystemError as error:
-        ml_error(
-            f"During source checks:\n"
-            f"The provider '{provider.name}' has encountered a fatal error:\n"
-            f"From source '{provider.source_reference().__class__.__name__}':\n"
-            f"{error.message}\n\n"
-            f"These are the actions that need to be done:\n"
-            f"{error.action_needed}"
-        )
-        raise
+        raise postprocess_provider_error(provider, error)
 
     logger.debug("Now greeting server")
     source_reference.greet()
