@@ -1,6 +1,7 @@
 """These are some critical functions and classes for core single server functionality."""
 from single import _enums as enums, Package
 from single.server import utils
+from single.server import providers as provs
 from single.core import ProviderMetadata
 from single.utils import ServerState
 from loguru import logger
@@ -23,10 +24,9 @@ def prepare_server(logging_level: enums.LoggingLevel) -> None:
     Returns:
         Nothing.
     """
-    utils.initialize_logger(logger)
     utils.set_logging_level(logging_level)
     logger.debug("Preparing to start the server...")
-    utils.load_providers(providers, errors)
+    provs.load_providers(providers, errors)
 
 
 def start(port: int, logging_level: enums.LoggingLevel) -> None:
@@ -98,7 +98,7 @@ class SinglePackageManagerService(Service):
             Nothing.
         """
         logger.info("Being asked to reload the providers")
-        utils.load_providers(providers, errors)
+        provs.load_providers(providers, errors)
 
     @property
     def exposed_status(self) -> ServerState:
