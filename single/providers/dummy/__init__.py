@@ -1,8 +1,10 @@
-from single import Source, Package, UnsupportedSystemError
+from single import Source, Package, UnsupportedSystemError, System
 import typing as t
 
 
 class DummySource(Source):
+    os_supported = [System.LINUX, System.MAC, System.WINDOWS, System.BSD]
+
     @property
     def backend_version(self) -> str:
         return "0.1.0"
