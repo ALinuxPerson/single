@@ -6,7 +6,7 @@ import importlib.util
 import os
 import typing as t
 from single.enums import System
-from single import Flag
+from single import Flags
 import platform
 import attr
 
@@ -90,7 +90,7 @@ def prettify_list(list_: t.List[t.Any]) -> str:
     return ", ".join([str(item) for item in list_])
 
 
-def parse_system_flag(flag: Flag) -> System:
+def parse_system_flag(flag: Flags) -> System:
     """This parses a singular flag to its System enum equivalent.
 
     Args:
@@ -103,10 +103,10 @@ def parse_system_flag(flag: Flag) -> System:
         The parsed flag.
     """
     flag_system_map = {
-        Flag.LINUX_SUPPORTED: System.LINUX,
-        Flag.MAC_SUPPORTED: System.MAC,
-        Flag.WINDOWS_SUPPORTED: System.WINDOWS,
-        Flag.BSD_SUPPORTED: System.BSD,
+        Flags.LINUX_SUPPORTED: System.LINUX,
+        Flags.MAC_SUPPORTED: System.MAC,
+        Flags.WINDOWS_SUPPORTED: System.WINDOWS,
+        Flags.BSD_SUPPORTED: System.BSD,
     }
 
     try:
@@ -117,7 +117,7 @@ def parse_system_flag(flag: Flag) -> System:
         ) from None
 
 
-def get_compatible_systems(*flags: Flag) -> t.List[System]:
+def get_compatible_systems(*flags: Flags) -> t.List[System]:
     """This retrieves a list of systems supported from flags.
 
     Args:
@@ -127,10 +127,10 @@ def get_compatible_systems(*flags: Flag) -> t.List[System]:
         A list of systems supported.
     """
     OS_SUPPORTED = [
-        Flag.WINDOWS_SUPPORTED,
-        Flag.LINUX_SUPPORTED,
-        Flag.MAC_SUPPORTED,
-        Flag.BSD_SUPPORTED,
+        Flags.WINDOWS_SUPPORTED,
+        Flags.LINUX_SUPPORTED,
+        Flags.MAC_SUPPORTED,
+        Flags.BSD_SUPPORTED,
     ]
     compatible_systems: t.List[System] = []
 
@@ -138,7 +138,7 @@ def get_compatible_systems(*flags: Flag) -> t.List[System]:
         if flag in OS_SUPPORTED:
             parsed_flag = parse_system_flag(flag)
             compatible_systems.append(parsed_flag)
-        elif flag == Flag.ALL_OS_SUPPORTED:
+        elif flag == Flags.ALL_OS_SUPPORTED:
             compatible_systems.clear()
             compatible_systems.extend(
                 parse_system_flag(unparsed_flag) for unparsed_flag in OS_SUPPORTED

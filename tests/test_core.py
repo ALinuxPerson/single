@@ -1,4 +1,4 @@
-from single import core, Source, Package, Flag
+from single import core, Source, Package, Flags
 from pathlib import Path
 import platform
 import pytest
@@ -34,22 +34,22 @@ def test_that_provider_metadata_processes_a_provider_folder_correctly() -> None:
 def test_windows_support_works_properly_for_flag_processing() -> None:
     system = platform.system()
     if system == "Windows":
-        core.process_flags("Test", Flag.WINDOWS_SUPPORTED)
+        core.process_flags("Test", Flags.WINDOWS_SUPPORTED)
 
 
 def test_mac_support_works_properly_for_flag_processing() -> None:
     system = platform.system()
     if system == "Darwin":
-        core.process_flags("Test", Flag.MAC_SUPPORTED)
+        core.process_flags("Test", Flags.MAC_SUPPORTED)
 
 
 def test_linux_support_works_properly_for_flag_processing() -> None:
     system = platform.system()
     if system == "Linux":
-        core.process_flags("Test", Flag.LINUX_SUPPORTED)
+        core.process_flags("Test", Flags.LINUX_SUPPORTED)
 
 
 def test_bsd_support_works_properly_for_flag_processing() -> None:
     system = platform.system()
     if system == "FreeBSD":
-        core.process_flags("Test", Flag.BSD_SUPPORTED)
+        core.process_flags("Test", Flags.BSD_SUPPORTED)

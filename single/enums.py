@@ -2,7 +2,7 @@
 import enum as e
 
 
-class Flag(e.Enum):
+class Flags(e.Enum):
     """Flags that your custom source can use."""
 
     PARTIAL_UPGRADES_SUPPORTED = e.auto()

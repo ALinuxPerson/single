@@ -1,6 +1,6 @@
 """This provides some core classes and functions for `single`."""
 import attr
-from single import Package, Source, Flag, UnsupportedSystemError
+from single import Package, Source, Flags, UnsupportedSystemError
 from single import utils as u
 import typing as t
 from pathlib import Path
@@ -63,7 +63,7 @@ class ProviderMetadata:
         )
 
 
-def process_flags(source_name: str, *flags: Flag) -> None:
+def process_flags(source_name: str, *flags: Flags) -> None:
     """This processes flags.
 
     This processes flags commonly from a FLAG property. This should always be used on Source.supported.
