@@ -48,16 +48,16 @@ class Source(abc.ABC):
         Returns:
             The backend version.
         """
-        raise NotImplementedError
 
+    @abc.abstractmethod
     def supported(self) -> None:
         """This goes through a number of checks to see if the source supports a system.
 
         Returns:
             Nothing, or raise an UnsupportedSystemError.
         """
-        raise NotImplementedError
 
+    @abc.abstractmethod
     def package(self, name: str) -> t.List[Package]:
         """This searches for packages.
 
@@ -67,8 +67,8 @@ class Source(abc.ABC):
         Returns:
             A list of packages found.
         """
-        raise NotImplementedError
 
+    @abc.abstractmethod
     def install_package(self, *packages: Package) -> None:
         """This installs a package.
 
@@ -78,8 +78,8 @@ class Source(abc.ABC):
         Returns:
             Nothing, or raise an exception.
         """
-        raise NotImplementedError
 
+    @abc.abstractmethod
     def remove_package(self, *packages: Package) -> None:
         """This removes a package.
 
@@ -89,8 +89,8 @@ class Source(abc.ABC):
         Returns:
             Nothing, or raise an exception.
         """
-        raise NotImplementedError
 
+    @abc.abstractmethod
     def update_package(self, *packages: Package) -> None:
         """This updates a package.
 
@@ -103,8 +103,8 @@ class Source(abc.ABC):
         Returns:
 
         """
-        raise NotImplementedError
 
+    @abc.abstractmethod
     def greet(self) -> None:
         """This is a simple greeting once a source is initialized.
 
@@ -114,4 +114,3 @@ class Source(abc.ABC):
         Returns:
             Nothing.
         """
-        raise NotImplementedError
