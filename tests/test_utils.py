@@ -1,5 +1,4 @@
 from single import utils
-from single import Flags
 from pathlib import Path
 from single.enums import System
 import platform
@@ -43,25 +42,6 @@ def test_prettify_list() -> None:
     prettified_list = "shoebox, horn, mattress, 10"
 
     assert utils.prettify_list(unprettified_list) == prettified_list
-
-
-def test_parse_system_flag() -> None:
-    assert utils.parse_system_flag(Flags.LINUX_SUPPORTED) == System.LINUX
-    assert utils.parse_system_flag(Flags.WINDOWS_SUPPORTED) == System.WINDOWS
-    assert utils.parse_system_flag(Flags.MAC_SUPPORTED) == System.MAC
-    assert utils.parse_system_flag(Flags.BSD_SUPPORTED) == System.BSD
-
-    with pytest.raises(ValueError):
-        utils.parse_system_flag(Flags.DOWNGRADE_SUPPORTED)
-
-
-def test_get_compatible_systems() -> None:
-    os_supported = [System.WINDOWS, System.LINUX, System.MAC, System.BSD]
-    assert utils.get_compatible_systems(Flags.LINUX_SUPPORTED, Flags.BSD_SUPPORTED) == [
-        System.LINUX,
-        System.BSD,
-    ]
-    assert utils.get_compatible_systems(Flags.ALL_OS_SUPPORTED) == os_supported
 
 
 def test_get_system() -> None:

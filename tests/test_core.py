@@ -1,4 +1,4 @@
-from single import core, Source, Package, Flags
+from single import core, Source, Package
 from pathlib import Path
 import platform
 import pytest
@@ -29,27 +29,3 @@ def test_that_provider_metadata_processes_a_provider_folder_correctly() -> None:
     assert provider_metadata.source_reference == Source
     assert provider_metadata.package_reference == Package
     assert provider_metadata.dependencies == []
-
-
-def test_windows_support_works_properly_for_flag_processing() -> None:
-    system = platform.system()
-    if system == "Windows":
-        core.process_flags("Test", Flags.WINDOWS_SUPPORTED)
-
-
-def test_mac_support_works_properly_for_flag_processing() -> None:
-    system = platform.system()
-    if system == "Darwin":
-        core.process_flags("Test", Flags.MAC_SUPPORTED)
-
-
-def test_linux_support_works_properly_for_flag_processing() -> None:
-    system = platform.system()
-    if system == "Linux":
-        core.process_flags("Test", Flags.LINUX_SUPPORTED)
-
-
-def test_bsd_support_works_properly_for_flag_processing() -> None:
-    system = platform.system()
-    if system == "FreeBSD":
-        core.process_flags("Test", Flags.BSD_SUPPORTED)

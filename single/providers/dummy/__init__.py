@@ -1,22 +1,13 @@
-from single import Source, Flags, Package, UnsupportedSystemError, process_flags
+from single import Source, Package, UnsupportedSystemError
 import typing as t
 
 
 class DummySource(Source):
     @property
-    def FLAGS(self) -> t.List[Flags]:
-        return [
-            Flags.ALL_OS_SUPPORTED,
-            Flags.DOWNGRADE_SUPPORTED,
-            Flags.PARTIAL_UPGRADES_SUPPORTED,
-        ]
-
-    @property
     def backend_version(self) -> str:
         return "0.1.0"
 
     def supported(self) -> None:
-        process_flags(self.__class__.__name__, *self.FLAGS)
         raise UnsupportedSystemError(
             "a",
             "",
