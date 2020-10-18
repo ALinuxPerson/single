@@ -73,11 +73,11 @@ class Source(abc.ABC):
             )
 
     @abc.abstractmethod
-    def package(self, name: str) -> t.List[Package]:
+    def package(self, *names: str) -> t.List[Package]:
         """This searches for packages.
 
         Args:
-            name: The name of the package.
+            *names: The name of the packages.
 
         Returns:
             A list of packages found.
